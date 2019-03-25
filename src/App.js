@@ -31,6 +31,7 @@ var About_1 = require("./components/About");
 var Facts_1 = __importDefault(require("./containers/Facts"));
 var Footer_1 = require("./components/Footer");
 var Contacts_1 = require("./components/Contacts");
+var Login_1 = require("./components/Login");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
@@ -39,10 +40,9 @@ var App = /** @class */ (function (_super) {
     App.prototype.render = function () {
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(react_router_dom_1.Switch, null,
-                react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: Login }),
+                react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.Login }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/panel", component: Panel }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/voting", component: Voting }),
-                react_1["default"].createElement(react_router_dom_1.Route, { path: "/voting-widget", component: VotingWidget }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/about", component: Landing }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/", component: Landing }))));
     };
@@ -57,16 +57,12 @@ function Landing() {
         react_1["default"].createElement(Contacts_1.Contacts, null),
         react_1["default"].createElement(Footer_1.Footer, null)));
 }
-function Login() {
-    return react_1["default"].createElement("h2", null, "Login");
-}
 function Panel() {
-    return react_1["default"].createElement("h2", null, "Panel");
+    return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
+            pathname: "/login"
+        } }));
 }
 function Voting() {
     return react_1["default"].createElement("h2", null, "Voting");
-}
-function VotingWidget() {
-    return react_1["default"].createElement("h2", null, "VotingWidhet");
 }
 exports["default"] = App;

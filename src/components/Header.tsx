@@ -1,5 +1,6 @@
 import React from "react";
 import { Link as ScrollLink, scrollSpy } from "react-scroll";
+import { Link } from "react-router-dom";
 
 // 'react-scroll' have bugs with active class, todo: fix
 
@@ -56,9 +57,7 @@ class Header extends React.Component {
                   </ScrollLink>
                 </li>
                 <li>
-                  <ScrollLink to="team" {...options}>
-                    Вход
-                  </ScrollLink>
+                  <Link to="/panel">Вход</Link>
                 </li>
               </ul>
             </nav>
