@@ -29,6 +29,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var react_1 = __importDefault(require("react"));
 var react_scroll_1 = require("react-scroll");
+var react_router_dom_1 = require("react-router-dom");
 // 'react-scroll' have bugs with active class, todo: fix
 var Header = /** @class */ (function (_super) {
     __extends(Header, _super);
@@ -67,7 +68,7 @@ var Header = /** @class */ (function (_super) {
                             react_1["default"].createElement("li", null,
                                 react_1["default"].createElement(react_scroll_1.Link, __assign({ to: "contacts" }, options), "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B")),
                             react_1["default"].createElement("li", null,
-                                react_1["default"].createElement(react_scroll_1.Link, __assign({ to: "team" }, options), "\u0412\u0445\u043E\u0434"))))))));
+                                react_1["default"].createElement(react_router_dom_1.Link, { to: "/panel" }, "\u0412\u0445\u043E\u0434"))))))));
     };
     return Header;
 }(react_1["default"].Component));

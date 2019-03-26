@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/HomeSection";
 import { About } from "./components/About";
 import Facts from "./containers/Facts";
 import { Footer } from "./components/Footer";
 import { Contacts } from "./components/Contacts";
+import { Login } from "./components/Login";
 
 class App extends Component {
   render() {
@@ -15,7 +16,6 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/panel" component={Panel} />
           <Route path="/voting" component={Voting} />
-          <Route path="/voting-widget" component={VotingWidget} />
           <Route path="/about" component={Landing} />
           <Route path="/" component={Landing} />
         </Switch>
@@ -36,17 +36,18 @@ function Landing() {
     </div>
   );
 }
-function Login() {
-  return <h2>Login</h2>;
-}
+
 function Panel() {
-  return <h2>Panel</h2>;
+  return (
+    <Redirect
+      to={{
+        pathname: "/login"
+      }}
+    />
+  );
 }
 function Voting() {
   return <h2>Voting</h2>;
-}
-function VotingWidget() {
-  return <h2>VotingWidhet</h2>;
 }
 
 export default App;
