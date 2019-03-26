@@ -9,6 +9,9 @@ var https_1 = __importDefault(require("https"));
 var fs_1 = __importDefault(require("fs"));
 var app = express_1["default"]();
 app.use("/", express_1["default"].static(__dirname + "/public"));
+app.get(/./, function (req, res) {
+    res.sendFile(__dirname + "/public/index.html");
+});
 var httpServer = http_1["default"].createServer(app);
 httpServer.listen(80, function () {
     console.log("HTTP Server running on port 80");

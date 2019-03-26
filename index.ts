@@ -7,6 +7,10 @@ const app = express();
 
 app.use("/", express.static(__dirname + "/public"));
 
+app.get(/./, (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 const httpServer = http.createServer(app);
 httpServer.listen(80, () => {
   console.log("HTTP Server running on port 80");
