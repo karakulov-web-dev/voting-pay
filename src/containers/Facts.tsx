@@ -82,11 +82,7 @@ class TeamFactsApp extends React.Component<TeamFactsProps> {
       );
     });
 
-    return (
-      <ul id="contacts" className="team-facts clearfix">
-        {items}
-      </ul>
-    );
+    return <ul className="team-facts clearfix">{items}</ul>;
   }
 }
 

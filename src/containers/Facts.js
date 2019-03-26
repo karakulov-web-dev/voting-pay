@@ -81,7 +81,7 @@ var TeamFactsApp = /** @class */ (function (_super) {
         var items = data.map(function (item, index) {
             return (react_1["default"].createElement(teamFactsItem_1["default"], { key: index, title: item.title, number: _this.props.currNumber[index], favicon: item.favicon }));
         });
-        return (react_1["default"].createElement("ul", { id: "contacts", className: "team-facts clearfix" }, items));
+        return react_1["default"].createElement("ul", { className: "team-facts clearfix" }, items);
     };
     return TeamFactsApp;
 }(react_1["default"].Component));
