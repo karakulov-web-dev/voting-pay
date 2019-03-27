@@ -32,6 +32,7 @@ var Facts_1 = __importDefault(require("./containers/Facts"));
 var Footer_1 = require("./components/Footer");
 var Contacts_1 = require("./components/Contacts");
 var Login_1 = require("./components/Login");
+var Panel_1 = require("./components/Panel");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {
@@ -40,8 +41,8 @@ var App = /** @class */ (function (_super) {
     App.prototype.render = function () {
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(react_router_dom_1.Switch, null,
+                react_1["default"].createElement(react_router_dom_1.Route, { path: "/panel", component: Panel_1.Panel }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.Login }),
-                react_1["default"].createElement(react_router_dom_1.Route, { path: "/panel", component: Panel }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/voting", component: Voting }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/about", component: Landing }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/", component: Landing }))));
@@ -56,11 +57,6 @@ function Landing() {
         react_1["default"].createElement(Facts_1["default"], null),
         react_1["default"].createElement(Contacts_1.Contacts, null),
         react_1["default"].createElement(Footer_1.Footer, null)));
-}
-function Panel() {
-    return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
-            pathname: "/login"
-        } }));
 }
 function Voting() {
     return react_1["default"].createElement("h2", null, "Voting");

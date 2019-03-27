@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import { Link as ScrollLink } from "react-scroll";
+import { Link } from "react-router-dom";
 
 class SliderItem3 extends React.Component {
   render() {
@@ -24,9 +25,9 @@ class SliderItem3 extends React.Component {
             <h2 className="slider-text2">Больше прибыль</h2>
             <p className="slider-text3">Дай разумный способ поддержать тебя</p>
             <div className="slider-btn-container">
-              <ScrollLink className="btn home-btn" to="work" {...scrollOptions}>
+              <Link className="btn home-btn" to="/panel">
                 Войти и Начать
-              </ScrollLink>
+              </Link>
             </div>
           </div>
         </div>

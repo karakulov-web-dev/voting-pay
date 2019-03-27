@@ -12,6 +12,9 @@ try {
 }
 catch (e) { }
 var state = {
+    User: {
+        authStatus: false
+    },
     slider: {
         currSlide: 1,
         transitionDuration: 1000,

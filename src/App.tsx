@@ -7,14 +7,15 @@ import Facts from "./containers/Facts";
 import { Footer } from "./components/Footer";
 import { Contacts } from "./components/Contacts";
 import { Login } from "./components/Login";
+import { Panel } from "./components/Panel";
 
 class App extends Component {
   render() {
     return (
       <div>
         <Switch>
-          <Route path="/login" component={Login} />
           <Route path="/panel" component={Panel} />
+          <Route path="/login" component={Login} />
           <Route path="/voting" component={Voting} />
           <Route path="/about" component={Landing} />
           <Route path="/" component={Landing} />
@@ -37,15 +38,6 @@ function Landing() {
   );
 }
 
-function Panel() {
-  return (
-    <Redirect
-      to={{
-        pathname: "/login"
-      }}
-    />
-  );
-}
 function Voting() {
   return <h2>Voting</h2>;
 }

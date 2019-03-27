@@ -103,7 +103,8 @@ function matchDispatchToProps(dispatch: Dispatch) {
   );
 }
 
-export default connect(
+var b = connect(
   mapStateToProps,
   matchDispatchToProps
 )(TeamFactsApp);
+export default b;

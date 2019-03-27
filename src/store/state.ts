@@ -10,6 +10,9 @@ try {
 } catch (e) {}
 
 let state: State = {
+  User: {
+    authStatus: false
+  },
   slider: {
     currSlide: 1,
     transitionDuration: 1000,
@@ -25,6 +28,9 @@ let state: State = {
   }
 };
 export interface State {
+  User: {
+    authStatus: boolean;
+  };
   slider: {
     currSlide: number;
     transitionDuration: number;
