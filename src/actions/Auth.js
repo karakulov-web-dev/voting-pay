@@ -44,7 +44,7 @@ function accessTokenChecker(accessToken) {
                 case 0: return [4 /*yield*/, HTTP_1.httpCheckAccessToken(accessToken)];
                 case 1:
                     result = _a.sent();
-                    return [2 /*return*/, result.AccessTokenStatus];
+                    return [2 /*return*/, result.data.AccessTokenStatus];
             }
         });
     });

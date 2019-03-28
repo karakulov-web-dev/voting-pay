@@ -1,6 +1,5 @@
 import { ThunkAnyAction } from "../commonTypes/common";
-import { httpCheckAccessToken, httpCheckAccessTokenResult } from "../HTTP";
-import { resolve } from "url";
+import { httpCheckAccessToken } from "../HTTP";
 
 interface AccessTokenCheck {
   (accessToken: string): Promise<boolean>;
@@ -13,7 +12,7 @@ export interface ActionChangeAuthStatus {
 
 export async function accessTokenChecker(accessToken: string) {
   let result = await httpCheckAccessToken(accessToken);
-  return result.AccessTokenStatus;
+  return result.data.AccessTokenStatus;
 }
 
 export function checkAccessToken(

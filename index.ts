@@ -5,7 +5,23 @@ import fs from "fs";
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/", express.static(__dirname + "/public"));
+
+app.post("/check-access-token", (req, res) => {
+  let status;
+  if (req.body.AccessToken === "validToken") {
+    status = true;
+  } else {
+    status = false;
+  }
+  res.send({
+    errorStatus: false,
+    errorText: "",
+    AccessTokenStatus: status
+  });
+});
 
 app.get(/./, (req, res) => {
   res.sendFile(__dirname + "/public/index.html");

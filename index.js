@@ -8,7 +8,22 @@ var http_1 = __importDefault(require("http"));
 var https_1 = __importDefault(require("https"));
 var fs_1 = __importDefault(require("fs"));
 var app = express_1["default"]();
+app.use(express_1["default"].json());
 app.use("/", express_1["default"].static(__dirname + "/public"));
+app.post("/check-access-token", function (req, res) {
+    var status;
+    if (req.body.AccessToken === "validToken") {
+        status = true;
+    }
+    else {
+        status = false;
+    }
+    res.send({
+        errorStatus: false,
+        errorText: "",
+        AccessTokenStatus: status
+    });
+});
 app.get(/./, function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });

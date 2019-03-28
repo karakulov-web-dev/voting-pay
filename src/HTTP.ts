@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 import { resolve } from "url";
 
 const apiServer = "http://localhost/";
@@ -12,17 +12,12 @@ export interface httpCheckAccessTokenResult {
   errorText: string;
   AccessTokenStatus: boolean;
 }
+export type CheckAccessTokenPromise = AxiosPromise<httpCheckAccessTokenResult>;
 
-export function httpCheckAccessToken(
-  token: string
-): Promise<httpCheckAccessTokenResult> {
-  return new Promise(function(resolve) {
-    setTimeout(() => {
-      resolve({
-        errorStatus: false,
-        errorText: "",
-        AccessTokenStatus: false
-      });
-    }, 1000);
+export function httpCheckAccessToken(token: string) {
+  return http.post<httpCheckAccessTokenResult>("/check-access-token", {
+    payload: {
+      AccessToken: token
+    }
   });
 }
