@@ -1,4 +1,5 @@
 import axios from "axios";
+import { resolve } from "url";
 
 const apiServer = "http://localhost/";
 
@@ -12,6 +13,16 @@ export interface httpCheckAccessTokenResult {
   AccessTokenStatus: boolean;
 }
 
-export function httpCheckAccessToken(token: string) {
-  http.get("");
+export function httpCheckAccessToken(
+  token: string
+): Promise<httpCheckAccessTokenResult> {
+  return new Promise(function(resolve) {
+    setTimeout(() => {
+      resolve({
+        errorStatus: false,
+        errorText: "",
+        AccessTokenStatus: false
+      });
+    }, 1000);
+  });
 }

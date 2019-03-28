@@ -9,6 +9,14 @@ var http = axios_1["default"].create({
     baseURL: apiServer
 });
 function httpCheckAccessToken(token) {
-    http.get("");
+    return new Promise(function (resolve) {
+        setTimeout(function () {
+            resolve({
+                errorStatus: false,
+                errorText: "",
+                AccessTokenStatus: false
+            });
+        }, 1000);
+    });
 }
 exports.httpCheckAccessToken = httpCheckAccessToken;

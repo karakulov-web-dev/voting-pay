@@ -4,7 +4,7 @@ import { Login } from "../components/Login";
 import { State } from "../store/state";
 import { connect } from "react-redux";
 import * as actions from "../actions/sliderActions";
-import { checkAccessToken } from "../actions/Auth";
+import { checkAccessToken, accessTokenChecker } from "../actions/Auth";
 
 interface AuthProps {
   authStatus: boolean;
@@ -35,7 +35,7 @@ class Auth extends React.Component<any> {
       return true;
     }
     setTimeout(() => {
-      this.props.checkAccessToken(AccessToken);
+      this.props.checkAccessToken(AccessToken, accessTokenChecker);
     });
     return undefined;
   }

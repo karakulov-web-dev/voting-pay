@@ -48,7 +48,7 @@ var Auth = /** @class */ (function (_super) {
             return true;
         }
         setTimeout(function () {
-            _this.props.checkAccessToken(AccessToken);
+            _this.props.checkAccessToken(AccessToken, Auth_1.accessTokenChecker);
         });
         return undefined;
     };
