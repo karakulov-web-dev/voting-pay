@@ -16,8 +16,6 @@ export type CheckAccessTokenPromise = AxiosPromise<httpCheckAccessTokenResult>;
 
 export function httpCheckAccessToken(token: string) {
   return http.post<httpCheckAccessTokenResult>("/check-access-token", {
-    payload: {
-      AccessToken: token
-    }
+    AccessToken: token
   });
 }

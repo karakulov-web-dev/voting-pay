@@ -65,9 +65,3 @@ function matchDispatchToProps(dispatch) {
     }, dispatch);
 }
 exports["default"] = react_redux_1.connect(mapStateToProps, matchDispatchToProps)(Auth);
-//    <Redirect
-//to = {{
-//  pathname: "/login"
-//}}
-//
-//

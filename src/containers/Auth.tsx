@@ -3,7 +3,6 @@ import { ActionCreator, Dispatch, bindActionCreators } from "redux";
 import { Login } from "../components/Login";
 import { State } from "../store/state";
 import { connect } from "react-redux";
-import * as actions from "../actions/sliderActions";
 import { checkAccessToken, accessTokenChecker } from "../actions/Auth";
 
 interface AuthProps {
@@ -60,10 +59,3 @@ export default connect(
   mapStateToProps,
   matchDispatchToProps
 )(Auth);
-
-//    <Redirect
-//to = {{
-//  pathname: "/login"
-//}}
-//
-//

@@ -10,9 +10,7 @@ var http = axios_1["default"].create({
 });
 function httpCheckAccessToken(token) {
     return http.post("/check-access-token", {
-        payload: {
-            AccessToken: token
-        }
+        AccessToken: token
     });
 }
 exports.httpCheckAccessToken = httpCheckAccessToken;
