@@ -43,6 +43,7 @@ var App = /** @class */ (function (_super) {
             react_1["default"].createElement(react_router_dom_1.Switch, null,
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/panel", component: Panel_1.Panel }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.Login }),
+                react_1["default"].createElement(react_router_dom_1.Route, { path: "/registration", component: Login_1.Login }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/voting", component: Voting }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/about", component: Landing }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/", component: Landing }))));

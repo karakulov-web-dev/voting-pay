@@ -16,6 +16,7 @@ class App extends Component {
         <Switch>
           <Route path="/panel" component={Panel} />
           <Route path="/login" component={Login} />
+          <Route path="/registration" component={Login} />
           <Route path="/voting" component={Voting} />
           <Route path="/about" component={Landing} />
           <Route path="/" component={Landing} />

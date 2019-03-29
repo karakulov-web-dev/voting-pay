@@ -8,6 +8,7 @@ import {
   Message,
   Segment
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export const Login = () => (
   <div className="login-form">
@@ -27,19 +28,7 @@ export const Login = () => (
     </style>
     <Grid textAlign="center" style={{ height: "100%" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header
-          as="h2"
-          color="teal"
-          textAlign="center"
-          style={{
-            margin: "0 0",
-            borderRadius: "2px",
-            backgroundColor: "#44433e",
-            paddingRight: "20px"
-          }}
-        >
-          <Image src="/img/logo.png" /> Войдите в аккаунт
-        </Header>
+        <HeaderLogin />
         <Form size="large">
           <Segment stacked>
             <Form.Input
@@ -62,9 +51,32 @@ export const Login = () => (
           </Segment>
         </Form>
         <Message>
-          Впервые на VotingPay? <a href="#">Регистрация</a>
+          Впервые на VotingPay?
+          <Link to="/registration"> Регистрация</Link>
         </Message>
       </Grid.Column>
     </Grid>
   </div>
 );
+
+const HeaderSection = (text: string) => {
+  return (
+    <Header
+      as="h2"
+      color="teal"
+      textAlign="center"
+      style={{
+        margin: "0 0",
+        borderRadius: "2px",
+        backgroundColor: "#44433e",
+        paddingRight: "20px"
+      }}
+    >
+      <Image src="/img/logo.png" /> {text}
+    </Header>
+  );
+};
+
+const HeaderLogin = HeaderSection.bind(null, "Войдите в аккаунт");
+
+const HeaderRegistration = () => {};
