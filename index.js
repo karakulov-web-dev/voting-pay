@@ -58,7 +58,7 @@ var httpServer = http_1["default"].createServer(app);
 httpServer.listen(80, function () {
     console.log("HTTP Server running on port 80");
 });
-var prodaction = false;
+var prodaction = true;
 if (prodaction) {
     var privateKey = void 0, certificate = void 0, ca = void 0;
     privateKey = fs_1["default"].readFileSync("/etc/letsencrypt/live/votingpay.com/privkey.pem", "utf8");

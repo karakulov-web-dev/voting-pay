@@ -61,7 +61,7 @@ httpServer.listen(80, () => {
   console.log("HTTP Server running on port 80");
 });
 
-let prodaction = false;
+let prodaction = true;
 
 if (prodaction) {
   let privateKey, certificate, ca;
