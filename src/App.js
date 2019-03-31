@@ -31,7 +31,7 @@ var About_1 = require("./components/About");
 var Facts_1 = __importDefault(require("./containers/Facts"));
 var Footer_1 = require("./components/Footer");
 var Contacts_1 = require("./components/Contacts");
-var Login_1 = require("./components/Login");
+var Login_1 = __importDefault(require("./containers/Login"));
 var Panel_1 = require("./components/Panel");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
@@ -42,8 +42,8 @@ var App = /** @class */ (function (_super) {
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(react_router_dom_1.Switch, null,
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/panel", component: Panel_1.Panel }),
-                react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.Login }),
-                react_1["default"].createElement(react_router_dom_1.Route, { path: "/registration", component: Login_1.Login }),
+                react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: Login_1["default"] }),
+                react_1["default"].createElement(react_router_dom_1.Route, { path: "/registration", component: Login_1["default"] }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/voting", component: Voting }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/about", component: Landing }),
                 react_1["default"].createElement(react_router_dom_1.Route, { path: "/", component: Landing }))));

@@ -14,3 +14,17 @@ function httpCheckAccessToken(token) {
     });
 }
 exports.httpCheckAccessToken = httpCheckAccessToken;
+function httpRegistrationUser(email, password) {
+    return http.post("/registration-user", {
+        email: email,
+        password: password
+    });
+}
+exports.httpRegistrationUser = httpRegistrationUser;
+function httploginUser(email, password) {
+    return http.post("/login-user", {
+        email: email,
+        password: password
+    });
+}
+exports.httploginUser = httploginUser;

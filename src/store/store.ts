@@ -5,4 +5,7 @@ import { state } from "./state";
 
 const store = createStore(rootReducer, state, applyMiddleware(thunk));
 
+let w: any = window;
+w.store = store;
+
 export { store };

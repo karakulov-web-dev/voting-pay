@@ -1,6 +1,5 @@
 import { checkAccessToken } from "../../src/actions/Auth";
 import { State } from "../../src/store/state";
-import { httpCheckAccessTokenResult } from "../../src/HTTP";
 
 describe("actions/Auth", function() {
   describe("checkAccessToken(accessToken: string)", function() {

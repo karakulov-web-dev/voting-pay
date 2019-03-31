@@ -25,6 +25,10 @@ let state: State = {
     finishNumber: [273, 831, 4112, 213958],
     incValues: [8, 20, 40, 2000],
     finished: false
+  },
+  loginForm: {
+    errorMessageLogin: "",
+    errorMessageRegistration: ""
   }
 };
 export interface State {
@@ -43,6 +47,10 @@ export interface State {
     finishNumber: number[];
     incValues: number[];
     finished: boolean;
+  };
+  loginForm: {
+    errorMessageLogin: string;
+    errorMessageRegistration: string;
   };
 }
 export { state };

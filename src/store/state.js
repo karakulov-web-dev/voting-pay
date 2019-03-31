@@ -27,6 +27,10 @@ var state = {
         finishNumber: [273, 831, 4112, 213958],
         incValues: [8, 20, 40, 2000],
         finished: false
+    },
+    loginForm: {
+        errorMessageLogin: "",
+        errorMessageRegistration: ""
     }
 };
 exports.state = state;

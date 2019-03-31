@@ -97,5 +97,4 @@ function matchDispatchToProps(dispatch) {
         stopCount: actions.stopCount
     }, dispatch);
 }
-var b = react_redux_1.connect(mapStateToProps, matchDispatchToProps)(TeamFactsApp);
-exports["default"] = b;
+exports["default"] = react_redux_1.connect(mapStateToProps, matchDispatchToProps)(TeamFactsApp);

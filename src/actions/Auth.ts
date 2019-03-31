@@ -31,6 +31,6 @@ export function checkAccessToken(
   };
 }
 
-function changeAuthStatus(status: boolean) {
+export function changeAuthStatus(status: boolean) {
   return { type: "CHANGE_AUTH_STATUS", payload: status };
 }

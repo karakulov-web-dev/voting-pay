@@ -76,3 +76,4 @@ exports.checkAccessToken = checkAccessToken;
 function changeAuthStatus(status) {
     return { type: "CHANGE_AUTH_STATUS", payload: status };
 }
+exports.changeAuthStatus = changeAuthStatus;

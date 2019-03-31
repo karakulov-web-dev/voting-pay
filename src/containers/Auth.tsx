@@ -1,9 +1,10 @@
 import React from "react";
 import { ActionCreator, Dispatch, bindActionCreators } from "redux";
-import { Login } from "../components/Login";
+import Login from "../containers/Login";
 import { State } from "../store/state";
 import { connect } from "react-redux";
 import { checkAccessToken, accessTokenChecker } from "../actions/Auth";
+import { Route } from "react-router";
 
 interface AuthProps {
   authStatus: boolean;
@@ -20,9 +21,9 @@ class Auth extends React.Component<any> {
     if (authStatus === true) {
       return this.props.children;
     } else if (authStatus === false) {
-      return <Login />;
+      return <Route component={Login} />;
     } else {
-      return <Login />;
+      return <Route component={Login} />;
     }
   }
   private checkAuth(): boolean | undefined {

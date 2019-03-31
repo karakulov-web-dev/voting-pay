@@ -9,3 +9,5 @@ var rootReducer_1 = require("../reducers/rootReducer");
 var state_1 = require("./state");
 var store = redux_1.createStore(rootReducer_1.rootReducer, state_1.state, redux_1.applyMiddleware(redux_thunk_1["default"]));
 exports.store = store;
+var w = window;
+w.store = store;

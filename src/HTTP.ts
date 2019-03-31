@@ -19,3 +19,28 @@ export function httpCheckAccessToken(token: string) {
     AccessToken: token
   });
 }
+
+export interface HttpRegistrationUserResult {
+  AccessToken: string;
+  errorStatus: boolean;
+  errorText: string;
+}
+export function httpRegistrationUser(email: string, password: string) {
+  return http.post<HttpRegistrationUserResult>("/registration-user", {
+    email,
+    password
+  });
+}
+
+export interface HttpLoginUserResult {
+  AccessToken: string;
+  errorStatus: boolean;
+  errorText: string;
+}
+
+export function httploginUser(email: string, password: string) {
+  return http.post<HttpLoginUserResult>("/login-user", {
+    email,
+    password
+  });
+}

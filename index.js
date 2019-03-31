@@ -24,6 +24,33 @@ app.post("/check-access-token", function (req, res) {
         AccessTokenStatus: status
     });
 });
+app.post("/registration-user", function (req, res) {
+    res.send({
+        errorStatus: false,
+        errorText: "",
+        AccessToken: "validToken"
+    });
+});
+app.post("/login-user", function (req, res) {
+    var errorStatus = false;
+    var errorText = "";
+    var AccessToken = "";
+    if (req.body.email === "test@votingpay.com" && req.body.password === "1234") {
+        errorStatus = false;
+        errorText = "";
+        AccessToken = "validToken";
+    }
+    else {
+        errorStatus = true;
+        errorText = "Не правильный логин или пароль";
+        AccessToken = "";
+    }
+    res.send({
+        errorStatus: errorStatus,
+        errorText: errorText,
+        AccessToken: AccessToken
+    });
+});
 app.get(/./, function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });
