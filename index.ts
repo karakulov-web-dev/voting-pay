@@ -3,9 +3,20 @@ import http from "http";
 import https from "https";
 import fs from "fs";
 
+let prodaction = false;
+
 const app = express();
 
 app.use(express.json());
+
+app.get(/./, (req, res, next) => {
+  if (req.protocol === "http" && prodaction) {
+    res.redirect("https://" + req.headers.host + req.url);
+    return;
+  } else {
+    next();
+  }
+});
 
 app.use("/", express.static(__dirname + "/public"));
 
@@ -53,9 +64,6 @@ app.post("/login-user", (req, res) => {
 });
 
 app.get(/./, (req, res) => {
-  if (req.protocol === "http") {
-    res.redirect("https://" + req.headers.host + req.url);
-  }
   res.sendFile(__dirname + "/public/index.html");
 });
 
@@ -63,8 +71,6 @@ const httpServer = http.createServer(app);
 httpServer.listen(80, () => {
   console.log("HTTP Server running on port 80");
 });
-
-let prodaction = false;
 
 if (prodaction) {
   let privateKey, certificate, ca;
