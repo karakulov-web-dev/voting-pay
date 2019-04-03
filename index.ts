@@ -2,8 +2,7 @@ import express from "express";
 import http from "http";
 import https from "https";
 import fs from "fs";
-
-let prodaction = false;
+import { prodaction } from "./variable";
 
 const app = express();
 

@@ -7,11 +7,11 @@ var express_1 = __importDefault(require("express"));
 var http_1 = __importDefault(require("http"));
 var https_1 = __importDefault(require("https"));
 var fs_1 = __importDefault(require("fs"));
-var prodaction = false;
+var variable_1 = require("./variable");
 var app = express_1["default"]();
 app.use(express_1["default"].json());
 app.get(/./, function (req, res, next) {
-    if (req.protocol === "http" && prodaction) {
+    if (req.protocol === "http" && variable_1.prodaction) {
         res.redirect("https://" + req.headers.host + req.url);
         return;
     }
@@ -68,7 +68,7 @@ var httpServer = http_1["default"].createServer(app);
 httpServer.listen(80, function () {
     console.log("HTTP Server running on port 80");
 });
-if (prodaction) {
+if (variable_1.prodaction) {
     var privateKey = void 0, certificate = void 0, ca = void 0;
     privateKey = fs_1["default"].readFileSync("/etc/letsencrypt/live/votingpay.com/privkey.pem", "utf8");
     certificate = fs_1["default"].readFileSync("/etc/letsencrypt/live/votingpay.com/cert.pem", "utf8");
