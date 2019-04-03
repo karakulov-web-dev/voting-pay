@@ -53,6 +53,9 @@ app.post("/login-user", (req, res) => {
 });
 
 app.get(/./, (req, res) => {
+  if (req.protocol === "http") {
+    res.redirect("https://" + req.headers.host + req.url);
+  }
   res.sendFile(__dirname + "/public/index.html");
 });
 
@@ -61,7 +64,7 @@ httpServer.listen(80, () => {
   console.log("HTTP Server running on port 80");
 });
 
-let prodaction = true;
+let prodaction = false;
 
 if (prodaction) {
   let privateKey, certificate, ca;

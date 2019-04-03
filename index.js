@@ -52,13 +52,16 @@ app.post("/login-user", function (req, res) {
     });
 });
 app.get(/./, function (req, res) {
+    if (req.protocol === "http") {
+        res.redirect("https://" + req.headers.host + req.url);
+    }
     res.sendFile(__dirname + "/public/index.html");
 });
 var httpServer = http_1["default"].createServer(app);
 httpServer.listen(80, function () {
     console.log("HTTP Server running on port 80");
 });
-var prodaction = true;
+var prodaction = false;
 if (prodaction) {
     var privateKey = void 0, certificate = void 0, ca = void 0;
     privateKey = fs_1["default"].readFileSync("/etc/letsencrypt/live/votingpay.com/privkey.pem", "utf8");
