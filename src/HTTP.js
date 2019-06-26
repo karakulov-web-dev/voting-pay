@@ -5,7 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var axios_1 = __importDefault(require("axios"));
 var variable_1 = require("../variable");
-var apiServer = variable_1.prodaction ? "https://votingpay.com/" : "http://localhost/";
+var apiServer = variable_1.prodaction
+    ? "https://votingpay.com/"
+    : "http://localhost:8081/";
 var http = axios_1["default"].create({
     baseURL: apiServer
 });

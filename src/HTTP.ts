@@ -1,7 +1,9 @@
 import axios, { AxiosPromise } from "axios";
 import { prodaction } from "../variable";
 
-const apiServer = prodaction ? "https://votingpay.com/" : "http://localhost/";
+const apiServer = prodaction
+  ? "https://votingpay.com/"
+  : "http://localhost:8081/";
 
 const http = axios.create({
   baseURL: apiServer
