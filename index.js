@@ -59,6 +59,17 @@ app.post("/login-user", function (req, res) {
         AccessToken: AccessToken
     });
 });
+app.post("/restore-password", function (req, res) {
+    var errorStatus = false;
+    var errorText = "";
+    var restorePasswordSessionId = Math.random() + "";
+    restorePasswordSessionId = restorePasswordSessionId.slice(2, 10);
+    res.send({
+        errorStatus: errorStatus,
+        errorText: errorText,
+        restorePasswordSessionId: restorePasswordSessionId
+    });
+});
 app.get(/./, function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });

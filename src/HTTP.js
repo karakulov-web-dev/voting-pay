@@ -31,3 +31,9 @@ function httploginUser(email, password) {
     });
 }
 exports.httploginUser = httploginUser;
+function httpRestorePassword(email) {
+    return http.post("/restore-password", {
+        email: email
+    });
+}
+exports.httpRestorePassword = httpRestorePassword;

@@ -18,10 +18,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var react_1 = __importDefault(require("react"));
 var redux_1 = require("redux");
-var Login_1 = __importDefault(require("../containers/Login"));
 var react_redux_1 = require("react-redux");
 var Auth_1 = require("../actions/Auth");
-var react_router_1 = require("react-router");
+var react_router_dom_1 = require("react-router-dom");
 var Auth = /** @class */ (function (_super) {
     __extends(Auth, _super);
     function Auth(props) {
@@ -33,10 +32,14 @@ var Auth = /** @class */ (function (_super) {
             return this.props.children;
         }
         else if (authStatus === false) {
-            return react_1["default"].createElement(react_router_1.Route, { component: Login_1["default"] });
+            return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
+                    pathname: "/login"
+                } }));
         }
         else {
-            return react_1["default"].createElement(react_router_1.Route, { component: Login_1["default"] });
+            return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
+                    pathname: "/login"
+                } }));
         }
     };
     Auth.prototype.checkAuth = function () {

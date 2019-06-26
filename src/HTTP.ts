@@ -46,3 +46,15 @@ export function httploginUser(email: string, password: string) {
     password
   });
 }
+
+export interface HttpRestorePasswordResult {
+  restorePasswordSessionId: string;
+  errorStatus: boolean;
+  errorText: string;
+}
+
+export function httpRestorePassword(email: string) {
+  return http.post<HttpRestorePasswordResult>("/restore-password", {
+    email
+  });
+}

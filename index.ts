@@ -60,6 +60,19 @@ app.post("/login-user", (req, res) => {
   });
 });
 
+app.post("/restore-password", (req, res) => {
+  let errorStatus = false;
+  let errorText = "";
+  let restorePasswordSessionId = Math.random() + "";
+  restorePasswordSessionId = restorePasswordSessionId.slice(2, 10);
+
+  res.send({
+    errorStatus,
+    errorText,
+    restorePasswordSessionId
+  });
+});
+
 app.get(/./, (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });

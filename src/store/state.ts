@@ -28,12 +28,14 @@ let state: State = {
   },
   loginForm: {
     errorMessageLogin: "",
-    errorMessageRegistration: ""
+    errorMessageRegistration: "",
+    errorMessageRestorePass: ""
   }
 };
 export interface State {
   User: {
     authStatus: boolean;
+    restorePasswordSessionId?: string;
   };
   slider: {
     currSlide: number;
@@ -51,6 +53,7 @@ export interface State {
   loginForm: {
     errorMessageLogin: string;
     errorMessageRegistration: string;
+    errorMessageRestorePass: string;
   };
 }
 export { state };
