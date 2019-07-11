@@ -38,7 +38,6 @@ interface StateLogin {
 export class Login extends React.Component<LoginProps, StateLogin> {
   constructor(props: LoginProps) {
     super(props);
-    console.log(this.props);
     this.state = {
       email: "",
       password: "",
@@ -62,262 +61,26 @@ export class Login extends React.Component<LoginProps, StateLogin> {
   render() {
     return (
       <div className="login-form">
-        {(() => {
-          if (this.props.authStatus) {
-            return <Redirect to={{ pathname: "/panel" }} />;
-          }
-          if (
-            this.props.restorePasswordSessionId &&
-            this.props.pathname === "/restore-password"
-          ) {
-            return <Redirect to={{ pathname: "/restore-password-session" }} />;
-          }
-          if (
-            this.props.pathname === "/restore-password-session" &&
-            !this.props.restorePasswordSessionId
-          ) {
-            return <Redirect to={{ pathname: "/restore-password" }} />;
-          }
-        })()}
-        {/*
-      Heads up! The styles below are necessary for the correct render of this example.
-      You can do same with CSS, the main idea is that all the elements up to the `Grid`
-      below must have a height of 100%.
-    */}
-        <style>
-          {`
-      body > div,
-      body > div > div,
-      body > div > div > div.login-form {
-        height: 100%;
-      }
-    `}
-        </style>
+        {this.redirects()}
+        {this.style()}
         <Grid
           textAlign="center"
           style={{ height: "100%" }}
           verticalAlign="middle"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Switch>
-              <Route
-                path={["/restore-password", "/restore-password-session"]}
-                component={HeaderRestorePassword}
-              />
-              <Route path="/registration" component={HeaderRegistration} />
-              <Route path="/login" component={HeaderLogin} />
-            </Switch>
-
-            <Form
-              size="large"
-              onSubmit={() => {
-                this.setState((state: StateLogin) => {
-                  return {
-                    ...state,
-                    errorMessageLogin: "",
-                    errorMessageRegistration: "",
-                    errorMessageRestorePass: ""
-                  };
-                });
-                if (this.props.pathname === "/registration") {
-                  if (this.registrationFormValidate()) {
-                    let { email, password } = this.state;
-                    this.props.registrationSubmitForm(email, password);
-                  }
-                } else if (this.props.pathname === "/restore-password") {
-                  if (this.restorePassFormValidate()) {
-                    let { email } = this.state;
-                    console.log(email);
-                    this.props.restorePassword(email);
-                  }
-                } else {
-                  if (this.loginFormValidate()) {
-                    let { email, password } = this.state;
-                    this.props.loginSubmitForm(email, password);
-                  }
-                }
-              }}
-            >
-              <Segment stacked>
-                <Switch>
-                  <Route
-                    path={["/login", "/registration", "/restore-password"]}
-                    render={() => {
-                      return (
-                        <Form.Input
-                          fluid
-                          icon="user"
-                          iconPosition="left"
-                          placeholder="Введите E-mail"
-                          onChange={event => {
-                            let value = event.target.value;
-                            this.setState((state: StateLogin) => {
-                              return {
-                                ...state,
-                                email: value
-                              };
-                            });
-                          }}
-                        />
-                      );
-                    }}
-                  />
-                </Switch>
-
-                <Switch>
-                  <Route
-                    path="/restore-password-session"
-                    render={() => {
-                      const message =
-                        "На ваш email отправленно письмо с кодом подтверждения";
-                      return <p style={{ color: "#86181d" }}>{message}</p>;
-                    }}
-                  />
-                </Switch>
-
-                <Switch>
-                  <Route
-                    path="/restore-password-session"
-                    render={() => {
-                      return (
-                        <Form.Input
-                          fluid
-                          icon="shield alternate"
-                          iconPosition="left"
-                          placeholder="Введите код подтверждения"
-                          onChange={event => {
-                            let value = event.target.value;
-                            this.setState((state: StateLogin) => {
-                              return {
-                                ...state,
-                                email: value
-                              };
-                            });
-                          }}
-                        />
-                      );
-                    }}
-                  />
-                </Switch>
-
-                <Switch>
-                  <Route
-                    path={["/login", "/registration"]}
-                    render={() => {
-                      return (
-                        <FormInputEnterPassword
-                          onChange={(event: any) => {
-                            let value = event.target.value;
-                            this.setState((state: StateLogin) => {
-                              return {
-                                ...state,
-                                password: value
-                              };
-                            });
-                          }}
-                        />
-                      );
-                    }}
-                  />
-                </Switch>
-
-                <Switch>
-                  <Route
-                    path="/registration"
-                    render={() => (
-                      <FormInputRepeatPassword
-                        onChange={(event: any) => {
-                          let value = event.target.value;
-                          this.setState((state: StateLogin) => {
-                            return {
-                              ...state,
-                              repeatPassword: value
-                            };
-                          });
-                        }}
-                      />
-                    )}
-                  />
-                </Switch>
-
-                <Switch>
-                  <Route
-                    path="/registration"
-                    render={() => {
-                      let { errorMessageRegistration } = this
-                        .state as StateLogin;
-                      if (!errorMessageRegistration) {
-                        errorMessageRegistration = this.props
-                          .errorMessageRegistration;
-                      }
-                      if (errorMessageRegistration) {
-                        return (
-                          <p style={{ color: "#86181d" }}>
-                            {errorMessageRegistration}
-                          </p>
-                        );
-                      }
-                    }}
-                  />
-
-                  <Route
-                    path="/login"
-                    render={() => {
-                      let { errorMessageLogin } = this.state as StateLogin;
-                      if (!errorMessageLogin) {
-                        errorMessageLogin = this.props.errorMessageLogin;
-                      }
-                      if (errorMessageLogin) {
-                        return (
-                          <p style={{ color: "#86181d" }}>
-                            {errorMessageLogin}
-                          </p>
-                        );
-                      }
-                    }}
-                  />
-
-                  <Route
-                    path="/restore-password"
-                    render={() => {
-                      let { errorMessageRestorePass } = this
-                        .state as StateLogin;
-                      if (!errorMessageRestorePass) {
-                        errorMessageRestorePass = this.props
-                          .errorMessageRestorePass;
-                      }
-                      if (errorMessageRestorePass) {
-                        return (
-                          <p style={{ color: "#86181d" }}>
-                            {errorMessageRestorePass}
-                          </p>
-                        );
-                      }
-                    }}
-                  />
-                </Switch>
-
-                <Switch>
-                  <Route
-                    path={["/restore-password", "/restore-password-session"]}
-                    component={ButtonSubmitRestorePassword}
-                  />
-                  <Route
-                    path="/registration"
-                    component={ButtonSubmitRegistration}
-                  />
-                  <Route path="/login" component={ButtonSubmitLogin} />
-                </Switch>
-              </Segment>
-            </Form>
+            {this.header()}
+            {this.form()}
             <Switch>
               <Route path="/registration" component={MessageRegistration} />
               <Route path="/login" component={MessageLogin} />
             </Switch>
+
             <Switch>
               <Route path="/registration" component={MessageLoginRestorePass} />
               <Route path="/login" component={MessageLoginRestorePass} />
             </Switch>
+
             <Switch>
               <Route
                 path="/restore-password-session"
@@ -335,8 +98,7 @@ export class Login extends React.Component<LoginProps, StateLogin> {
                         });
                       }}
                     >
-                      {" "}
-                      <MessageRestorePassSessionBack />{" "}
+                      <MessageRestorePassSessionBack />
                     </div>
                   );
                 }}
@@ -346,6 +108,252 @@ export class Login extends React.Component<LoginProps, StateLogin> {
         </Grid>
       </div>
     );
+  }
+
+  private redirects() {
+    if (this.props.authStatus) {
+      return <Redirect to={{ pathname: "/panel" }} />;
+    }
+    if (
+      this.props.restorePasswordSessionId &&
+      this.props.pathname === "/restore-password"
+    ) {
+      return <Redirect to={{ pathname: "/restore-password-session" }} />;
+    }
+    if (
+      this.props.pathname === "/restore-password-session" &&
+      !this.props.restorePasswordSessionId
+    ) {
+      return <Redirect to={{ pathname: "/restore-password" }} />;
+    }
+  }
+  private style() {
+    return (
+      <style>
+        {`
+      body > div,
+      body > div > div,
+      body > div > div > div.login-form {
+        height: 100%;
+      }
+    `}
+      </style>
+    );
+  }
+
+  private header() {
+    return (
+      <Switch>
+        <Route
+          path={["/restore-password", "/restore-password-session"]}
+          component={HeaderRestorePassword}
+        />
+        <Route path="/registration" component={HeaderRegistration} />
+        <Route path="/login" component={HeaderLogin} />
+      </Switch>
+    );
+  }
+
+  private form() {
+    return (
+      <Form
+        size="large"
+        onSubmit={() => {
+          this.formSubmit();
+        }}
+      >
+        <Segment stacked>
+          <Switch>
+            <Route
+              path={["/login", "/registration", "/restore-password"]}
+              render={() => {
+                return (
+                  <Form.Input
+                    fluid
+                    icon="user"
+                    iconPosition="left"
+                    placeholder="Введите E-mail"
+                    onChange={event => {
+                      let value = event.target.value;
+                      this.setState((state: StateLogin) => {
+                        return {
+                          ...state,
+                          email: value
+                        };
+                      });
+                    }}
+                  />
+                );
+              }}
+            />
+          </Switch>
+
+          <Switch>
+            <Route
+              path="/restore-password-session"
+              render={() => {
+                const message =
+                  "На ваш email отправленно письмо с кодом подтверждения";
+                return <p style={{ color: "#86181d" }}>{message}</p>;
+              }}
+            />
+          </Switch>
+
+          <Switch>
+            <Route
+              path="/restore-password-session"
+              render={() => {
+                return (
+                  <Form.Input
+                    fluid
+                    icon="shield alternate"
+                    iconPosition="left"
+                    placeholder="Введите код подтверждения"
+                    onChange={event => {
+                      let value = event.target.value;
+                      this.setState((state: StateLogin) => {
+                        return {
+                          ...state,
+                          email: value
+                        };
+                      });
+                    }}
+                  />
+                );
+              }}
+            />
+          </Switch>
+
+          <Switch>
+            <Route
+              path={["/login", "/registration"]}
+              render={() => {
+                return (
+                  <FormInputEnterPassword
+                    onChange={(event: any) => {
+                      let value = event.target.value;
+                      this.setState((state: StateLogin) => {
+                        return {
+                          ...state,
+                          password: value
+                        };
+                      });
+                    }}
+                  />
+                );
+              }}
+            />
+          </Switch>
+
+          <Switch>
+            <Route
+              path="/registration"
+              render={() => (
+                <FormInputRepeatPassword
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    this.setState((state: StateLogin) => {
+                      return {
+                        ...state,
+                        repeatPassword: value
+                      };
+                    });
+                  }}
+                />
+              )}
+            />
+          </Switch>
+
+          <Switch>
+            <Route
+              path="/registration"
+              render={() => {
+                let { errorMessageRegistration } = this.state as StateLogin;
+                if (!errorMessageRegistration) {
+                  errorMessageRegistration = this.props
+                    .errorMessageRegistration;
+                }
+                if (errorMessageRegistration) {
+                  return (
+                    <p style={{ color: "#86181d" }}>
+                      {errorMessageRegistration}
+                    </p>
+                  );
+                }
+              }}
+            />
+
+            <Route
+              path="/login"
+              render={() => {
+                let { errorMessageLogin } = this.state as StateLogin;
+                if (!errorMessageLogin) {
+                  errorMessageLogin = this.props.errorMessageLogin;
+                }
+                if (errorMessageLogin) {
+                  return (
+                    <p style={{ color: "#86181d" }}>{errorMessageLogin}</p>
+                  );
+                }
+              }}
+            />
+
+            <Route
+              path="/restore-password"
+              render={() => {
+                let { errorMessageRestorePass } = this.state as StateLogin;
+                if (!errorMessageRestorePass) {
+                  errorMessageRestorePass = this.props.errorMessageRestorePass;
+                }
+                if (errorMessageRestorePass) {
+                  return (
+                    <p style={{ color: "#86181d" }}>
+                      {errorMessageRestorePass}
+                    </p>
+                  );
+                }
+              }}
+            />
+          </Switch>
+
+          <Switch>
+            <Route
+              path={["/restore-password", "/restore-password-session"]}
+              component={ButtonSubmitRestorePassword}
+            />
+            <Route path="/registration" component={ButtonSubmitRegistration} />
+            <Route path="/login" component={ButtonSubmitLogin} />
+          </Switch>
+        </Segment>
+      </Form>
+    );
+  }
+
+  private formSubmit() {
+    this.setState((state: StateLogin) => {
+      return {
+        ...state,
+        errorMessageLogin: "",
+        errorMessageRegistration: "",
+        errorMessageRestorePass: ""
+      };
+    });
+    if (this.props.pathname === "/registration") {
+      if (this.registrationFormValidate()) {
+        let { email, password } = this.state;
+        this.props.registrationSubmitForm(email, password);
+      }
+    } else if (this.props.pathname === "/restore-password") {
+      if (this.restorePassFormValidate()) {
+        let { email } = this.state;
+        this.props.restorePassword(email);
+      }
+    } else {
+      if (this.loginFormValidate()) {
+        let { email, password } = this.state;
+        this.props.loginSubmitForm(email, password);
+      }
+    }
   }
 
   private registrationFormValidate(): boolean {

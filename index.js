@@ -62,8 +62,7 @@ app.post("/login-user", function (req, res) {
 app.post("/restore-password", function (req, res) {
     var errorStatus = false;
     var errorText = "";
-    var restorePasswordSessionId = Math.random() + "";
-    restorePasswordSessionId = restorePasswordSessionId.slice(2, 10);
+    var restorePasswordSessionId = String(Math.random()).slice(2, 10);
     res.send({
         errorStatus: errorStatus,
         errorText: errorText,
