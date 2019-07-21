@@ -58,3 +58,24 @@ export function httpRestorePassword(email: string) {
     email
   });
 }
+
+export interface HttpVerificationCodeResult {
+  errorStatus: boolean;
+  errorText: string;
+  AccessToken?: string;
+}
+
+export function restorePasswordVerificationCode(
+  code: string,
+  sessionId: string,
+  newPassword?: string
+) {
+  return http.post<HttpVerificationCodeResult>(
+    "/restore-password-verification-code",
+    {
+      code,
+      sessionId,
+      newPassword
+    }
+  );
+}

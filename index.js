@@ -69,6 +69,15 @@ app.post("/restore-password", function (req, res) {
         restorePasswordSessionId: restorePasswordSessionId
     });
 });
+app.post("/restore-password-verification-code", function (req, res) {
+    var errorStatus = false;
+    var errorText = "";
+    res.send({
+        errorStatus: errorStatus,
+        errorText: errorText,
+        AccessToken: "validToken"
+    });
+});
 app.get(/./, function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });

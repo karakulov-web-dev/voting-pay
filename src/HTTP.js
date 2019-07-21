@@ -37,3 +37,11 @@ function httpRestorePassword(email) {
     });
 }
 exports.httpRestorePassword = httpRestorePassword;
+function restorePasswordVerificationCode(code, sessionId, newPassword) {
+    return http.post("/restore-password-verification-code", {
+        code: code,
+        sessionId: sessionId,
+        newPassword: newPassword
+    });
+}
+exports.restorePasswordVerificationCode = restorePasswordVerificationCode;

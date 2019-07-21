@@ -36,6 +36,7 @@ export interface State {
   User: {
     authStatus: boolean;
     restorePasswordSessionId?: string;
+    restorePasswordVerificationCode?: string;
   };
   slider: {
     currSlide: number;

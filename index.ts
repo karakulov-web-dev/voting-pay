@@ -72,6 +72,17 @@ app.post("/restore-password", (req, res) => {
   });
 });
 
+app.post("/restore-password-verification-code", (req, res) => {
+  let errorStatus = false;
+  let errorText = "";
+
+  res.send({
+    errorStatus,
+    errorText,
+    AccessToken: "validToken"
+  });
+});
+
 app.get(/./, (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });

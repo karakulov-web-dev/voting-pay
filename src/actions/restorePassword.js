@@ -71,3 +71,45 @@ function restorePassword(req, email) {
     }); };
 }
 exports.restorePassword = restorePassword;
+function restorePasswordVerification(req, code, sessionId, newPassword) {
+    var _this = this;
+    return function (dispatch) { return __awaiter(_this, void 0, void 0, function () {
+        var result, action;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, req(code, sessionId, newPassword)];
+                case 1:
+                    result = _a.sent();
+                    if (result.data.AccessToken) {
+                        localStorage.setItem("AccessToken", result.data.AccessToken);
+                        dispatch({
+                            type: "SET_RESTORE_PASSWORD_VERIFICATION_CODE",
+                            payload: {
+                                status: true,
+                                code: ""
+                            }
+                        });
+                        dispatch({
+                            type: "SET_RESTORE_PASSWORD_SESSION_ID",
+                            payload: {
+                                restorePasswordSessionId: "",
+                                errorStatus: false,
+                                errorText: ""
+                            }
+                        });
+                        return [2 /*return*/];
+                    }
+                    action = {
+                        type: "SET_RESTORE_PASSWORD_VERIFICATION_CODE",
+                        payload: {
+                            status: !result.data.errorStatus,
+                            code: code
+                        }
+                    };
+                    dispatch(action);
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+}
+exports.restorePasswordVerification = restorePasswordVerification;

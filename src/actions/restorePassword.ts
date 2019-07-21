@@ -1,5 +1,5 @@
 import { ThunkAnyAction } from "../commonTypes/common";
-import { HttpRestorePasswordResult } from "../HTTP";
+import { HttpRestorePasswordResult, HttpVerificationCodeResult } from "../HTTP";
 import { AxiosPromise } from "axios";
 
 export function restorePassword(
@@ -36,4 +36,58 @@ interface RestorePasswordReq {
 export interface restorePasswordAction {
   type: string;
   payload: HttpRestorePasswordResult;
+}
+
+interface VerificationCodeReq {
+  (code: string, sessionId: string, newPassword?: string): AxiosPromise<
+    HttpVerificationCodeResult
+  >;
+}
+
+export interface RestorePasswordVerificationAction {
+  type: string;
+  payload: {
+    status: boolean;
+    code: string;
+  };
+}
+
+export function restorePasswordVerification(
+  req: VerificationCodeReq,
+  code: string,
+  sessionId: string,
+  newPassword?: string
+): ThunkAnyAction {
+  return async dispatch => {
+    var result = await req(code, sessionId, newPassword);
+
+    if (result.data.AccessToken) {
+      localStorage.setItem("AccessToken", result.data.AccessToken);
+      dispatch({
+        type: "SET_RESTORE_PASSWORD_VERIFICATION_CODE",
+        payload: {
+          status: true,
+          code: ""
+        }
+      });
+      dispatch({
+        type: "SET_RESTORE_PASSWORD_SESSION_ID",
+        payload: {
+          restorePasswordSessionId: "",
+          errorStatus: false,
+          errorText: ""
+        }
+      });
+      return;
+    }
+
+    let action: RestorePasswordVerificationAction = {
+      type: "SET_RESTORE_PASSWORD_VERIFICATION_CODE",
+      payload: {
+        status: !result.data.errorStatus,
+        code: code
+      }
+    };
+    dispatch(action);
+  };
 }

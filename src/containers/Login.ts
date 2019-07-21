@@ -5,8 +5,11 @@ import { State } from "../store/state";
 import { registrationUser } from "../actions/registrationUser";
 import { checkAccessToken } from "../actions/Auth";
 import { loginUser } from "../actions/checkLogin";
-import { restorePassword } from "../actions/restorePassword";
-import { httpRestorePassword } from "../HTTP";
+import {
+  restorePassword,
+  restorePasswordVerification
+} from "../actions/restorePassword";
+import { httpRestorePassword, restorePasswordVerificationCode } from "../HTTP";
 
 function mapStateToProps(state: State, ownProps: any) {
   return {
@@ -15,7 +18,8 @@ function mapStateToProps(state: State, ownProps: any) {
     errorMessageRegistration: state.loginForm.errorMessageRegistration,
     errorMessageRestorePass: state.loginForm.errorMessageRestorePass,
     authStatus: state.User.authStatus,
-    restorePasswordSessionId: state.User.restorePasswordSessionId
+    restorePasswordSessionId: state.User.restorePasswordSessionId,
+    restorePasswordVerificationCode: state.User.restorePasswordVerificationCode
   };
 }
 
@@ -26,6 +30,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
       registrationSubmitForm: registrationUser,
       checkAccessToken: checkAccessToken,
       restorePassword: restorePassword.bind(null, httpRestorePassword),
+      restorePasswordVerification: restorePasswordVerification.bind(
+        null,
+        restorePasswordVerificationCode
+      ),
       dispatch
     },
     dispatch

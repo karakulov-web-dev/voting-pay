@@ -92,6 +92,16 @@ var Login = /** @class */ (function (_super) {
             return react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: "/panel" } });
         }
         if (this.props.restorePasswordSessionId &&
+            this.props.restorePasswordVerificationCode &&
+            this.props.pathname !== "/restore-password-allowed") {
+            return react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: "/restore-password-allowed" } });
+        }
+        if (this.props.pathname === "/restore-password-allowed" &&
+            (!this.props.restorePasswordSessionId ||
+                !this.props.restorePasswordVerificationCode)) {
+            return react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: "/restore-password" } });
+        }
+        if (this.props.restorePasswordSessionId &&
             this.props.pathname === "/restore-password") {
             return react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: "/restore-password-session" } });
         }
@@ -106,6 +116,7 @@ var Login = /** @class */ (function (_super) {
     Login.prototype.header = function () {
         return (react_1["default"].createElement(react_router_dom_1.Switch, null,
             react_1["default"].createElement(react_router_dom_1.Route, { path: ["/restore-password", "/restore-password-session"], component: HeaderRestorePassword }),
+            react_1["default"].createElement(react_router_dom_1.Route, { path: "/restore-password-allowed", component: HeaderChangePassword }),
             react_1["default"].createElement(react_router_dom_1.Route, { path: "/registration", component: HeaderRegistration }),
             react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: HeaderLogin })));
     };
@@ -134,12 +145,12 @@ var Login = /** @class */ (function (_super) {
                             return (react_1["default"].createElement(semantic_ui_react_1.Form.Input, { fluid: true, icon: "shield alternate", iconPosition: "left", placeholder: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0434 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F", onChange: function (event) {
                                     var value = event.target.value;
                                     _this.setState(function (state) {
-                                        return __assign({}, state, { email: value });
+                                        return __assign({}, state, { verificationCode: value });
                                     });
                                 } }));
                         } })),
                 react_1["default"].createElement(react_router_dom_1.Switch, null,
-                    react_1["default"].createElement(react_router_dom_1.Route, { path: ["/login", "/registration"], render: function () {
+                    react_1["default"].createElement(react_router_dom_1.Route, { path: ["/login", "/registration", "/restore-password-allowed"], render: function () {
                             return (react_1["default"].createElement(FormInputEnterPassword, { onChange: function (event) {
                                     var value = event.target.value;
                                     _this.setState(function (state) {
@@ -148,7 +159,7 @@ var Login = /** @class */ (function (_super) {
                                 } }));
                         } })),
                 react_1["default"].createElement(react_router_dom_1.Switch, null,
-                    react_1["default"].createElement(react_router_dom_1.Route, { path: "/registration", render: function () { return (react_1["default"].createElement(FormInputRepeatPassword, { onChange: function (event) {
+                    react_1["default"].createElement(react_router_dom_1.Route, { path: ["/registration", "/restore-password-allowed"], render: function () { return (react_1["default"].createElement(FormInputRepeatPassword, { onChange: function (event) {
                                 var value = event.target.value;
                                 _this.setState(function (state) {
                                     return __assign({}, state, { repeatPassword: value });
@@ -174,7 +185,11 @@ var Login = /** @class */ (function (_super) {
                                 return (react_1["default"].createElement("p", { style: { color: "#86181d" } }, errorMessageLogin));
                             }
                         } }),
-                    react_1["default"].createElement(react_router_dom_1.Route, { path: "/restore-password", render: function () {
+                    react_1["default"].createElement(react_router_dom_1.Route, { path: [
+                            "/restore-password",
+                            "/restore-password-session",
+                            "/restore-password-allowed"
+                        ], render: function () {
                             var errorMessageRestorePass = _this.state.errorMessageRestorePass;
                             if (!errorMessageRestorePass) {
                                 errorMessageRestorePass = _this.props.errorMessageRestorePass;
@@ -185,6 +200,7 @@ var Login = /** @class */ (function (_super) {
                         } })),
                 react_1["default"].createElement(react_router_dom_1.Switch, null,
                     react_1["default"].createElement(react_router_dom_1.Route, { path: ["/restore-password", "/restore-password-session"], component: ButtonSubmitRestorePassword }),
+                    react_1["default"].createElement(react_router_dom_1.Route, { path: "/restore-password-allowed", component: ButtonSubmitChangePassword }),
                     react_1["default"].createElement(react_router_dom_1.Route, { path: "/registration", component: ButtonSubmitRegistration }),
                     react_1["default"].createElement(react_router_dom_1.Route, { path: "/login", component: ButtonSubmitLogin })))));
     };
@@ -202,6 +218,16 @@ var Login = /** @class */ (function (_super) {
             if (this.restorePassFormValidate()) {
                 var email = this.state.email;
                 this.props.restorePassword(email);
+            }
+        }
+        else if (this.props.pathname === "/restore-password-session") {
+            if (this.restorePassSessionFormValidate()) {
+                this.props.restorePasswordVerification(this.state.verificationCode, this.props.restorePasswordSessionId);
+            }
+        }
+        else if (this.props.pathname === "/restore-password-allowed") {
+            if (this.changePasswordFormValidate()) {
+                this.props.restorePasswordVerification(this.props.restorePasswordVerificationCode, this.props.restorePasswordSessionId, this.state.password);
             }
         }
         else {
@@ -250,6 +276,34 @@ var Login = /** @class */ (function (_super) {
         }
         return status;
     };
+    Login.prototype.restorePassSessionFormValidate = function () {
+        var status = true;
+        var verificationCode = this.state.verificationCode;
+        if (!verificationCode) {
+            this.setState(function (state) {
+                return __assign({}, state, { errorMessageRestorePass: "Введите корректные данные" });
+            });
+            return (status = false);
+        }
+        return status;
+    };
+    Login.prototype.changePasswordFormValidate = function () {
+        var status = true;
+        var _a = this.state, password = _a.password, repeatPassword = _a.repeatPassword;
+        if (!(password && repeatPassword)) {
+            this.setState(function (state) {
+                return __assign({}, state, { errorMessageRestorePass: "Введите корректные данные" });
+            });
+            return (status = false);
+        }
+        if (password !== repeatPassword) {
+            this.setState(function (state) {
+                return __assign({}, state, { errorMessageRestorePass: "Пароли не совпадают" });
+            });
+            return (status = false);
+        }
+        return status;
+    };
     return Login;
 }(react_1["default"].Component));
 exports.Login = Login;
@@ -282,9 +336,11 @@ var FormInputRepeatPassword = FormInputPassword.bind(null, "Повторите �
 var ButtonSubmitRegistration = ButtonSubmit.bind(null, "Регистрация");
 var ButtonSubmitLogin = ButtonSubmit.bind(null, "Войти");
 var ButtonSubmitRestorePassword = ButtonSubmit.bind(null, "Восстановить");
+var ButtonSubmitChangePassword = ButtonSubmit.bind(null, "Сменить пароль");
 var HeaderRegistration = HeaderSection.bind(null, "Зарегистрируйтесь");
 var HeaderLogin = HeaderSection.bind(null, "Войдите в аккаунт");
 var HeaderRestorePassword = HeaderSection.bind(null, "Восстановление пароля");
+var HeaderChangePassword = HeaderSection.bind(null, "Сменить пароль");
 var MessageRegistration = MessageBox.bind(null, "Уже зарегистрированы?", "/login", "Войти");
 var MessageLogin = MessageBox.bind(null, "Впервые на VotingPay?", "/registration", "Регистрация");
 var MessageLoginRestorePass = MessageBox.bind(null, "Забыли пароль?", "/restore-password", "Восстановить");

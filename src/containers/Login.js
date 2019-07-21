@@ -15,7 +15,8 @@ function mapStateToProps(state, ownProps) {
         errorMessageRegistration: state.loginForm.errorMessageRegistration,
         errorMessageRestorePass: state.loginForm.errorMessageRestorePass,
         authStatus: state.User.authStatus,
-        restorePasswordSessionId: state.User.restorePasswordSessionId
+        restorePasswordSessionId: state.User.restorePasswordSessionId,
+        restorePasswordVerificationCode: state.User.restorePasswordVerificationCode
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -24,6 +25,7 @@ function mapDispatchToProps(dispatch) {
         registrationSubmitForm: registrationUser_1.registrationUser,
         checkAccessToken: Auth_1.checkAccessToken,
         restorePassword: restorePassword_1.restorePassword.bind(null, HTTP_1.httpRestorePassword),
+        restorePasswordVerification: restorePassword_1.restorePasswordVerification.bind(null, HTTP_1.restorePasswordVerificationCode),
         dispatch: dispatch
     }, dispatch);
 }

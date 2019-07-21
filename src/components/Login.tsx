@@ -17,6 +17,7 @@ interface LoginProps {
   registrationSubmitForm: ActionCreator<void>;
   checkAccessToken: ActionCreator<void>;
   restorePassword: ActionCreator<void>;
+  restorePasswordVerification: ActionCreator<void>;
   pathname: string;
   [key: string]: any;
   errorMessageLogin: string;
@@ -24,9 +25,11 @@ interface LoginProps {
   errorMessageRestorePass: string;
   authStatus: boolean;
   restorePasswordSessionId?: string;
+  restorePasswordVerificationCode?: string;
 }
 
 interface StateLogin {
+  verificationCode: string;
   email: string;
   password: string;
   repeatPassword: string;
@@ -116,6 +119,20 @@ export class Login extends React.Component<LoginProps, StateLogin> {
     }
     if (
       this.props.restorePasswordSessionId &&
+      this.props.restorePasswordVerificationCode &&
+      this.props.pathname !== "/restore-password-allowed"
+    ) {
+      return <Redirect to={{ pathname: "/restore-password-allowed" }} />;
+    }
+    if (
+      this.props.pathname === "/restore-password-allowed" &&
+      (!this.props.restorePasswordSessionId ||
+        !this.props.restorePasswordVerificationCode)
+    ) {
+      return <Redirect to={{ pathname: "/restore-password" }} />;
+    }
+    if (
+      this.props.restorePasswordSessionId &&
       this.props.pathname === "/restore-password"
     ) {
       return <Redirect to={{ pathname: "/restore-password-session" }} />;
@@ -147,6 +164,10 @@ export class Login extends React.Component<LoginProps, StateLogin> {
         <Route
           path={["/restore-password", "/restore-password-session"]}
           component={HeaderRestorePassword}
+        />
+        <Route
+          path="/restore-password-allowed"
+          component={HeaderChangePassword}
         />
         <Route path="/registration" component={HeaderRegistration} />
         <Route path="/login" component={HeaderLogin} />
@@ -214,7 +235,7 @@ export class Login extends React.Component<LoginProps, StateLogin> {
                       this.setState((state: StateLogin) => {
                         return {
                           ...state,
-                          email: value
+                          verificationCode: value
                         };
                       });
                     }}
@@ -226,7 +247,7 @@ export class Login extends React.Component<LoginProps, StateLogin> {
 
           <Switch>
             <Route
-              path={["/login", "/registration"]}
+              path={["/login", "/registration", "/restore-password-allowed"]}
               render={() => {
                 return (
                   <FormInputEnterPassword
@@ -247,7 +268,7 @@ export class Login extends React.Component<LoginProps, StateLogin> {
 
           <Switch>
             <Route
-              path="/registration"
+              path={["/registration", "/restore-password-allowed"]}
               render={() => (
                 <FormInputRepeatPassword
                   onChange={(event: any) => {
@@ -299,7 +320,11 @@ export class Login extends React.Component<LoginProps, StateLogin> {
             />
 
             <Route
-              path="/restore-password"
+              path={[
+                "/restore-password",
+                "/restore-password-session",
+                "/restore-password-allowed"
+              ]}
               render={() => {
                 let { errorMessageRestorePass } = this.state as StateLogin;
                 if (!errorMessageRestorePass) {
@@ -320,6 +345,10 @@ export class Login extends React.Component<LoginProps, StateLogin> {
             <Route
               path={["/restore-password", "/restore-password-session"]}
               component={ButtonSubmitRestorePassword}
+            />
+            <Route
+              path="/restore-password-allowed"
+              component={ButtonSubmitChangePassword}
             />
             <Route path="/registration" component={ButtonSubmitRegistration} />
             <Route path="/login" component={ButtonSubmitLogin} />
@@ -347,6 +376,21 @@ export class Login extends React.Component<LoginProps, StateLogin> {
       if (this.restorePassFormValidate()) {
         let { email } = this.state;
         this.props.restorePassword(email);
+      }
+    } else if (this.props.pathname === "/restore-password-session") {
+      if (this.restorePassSessionFormValidate()) {
+        this.props.restorePasswordVerification(
+          this.state.verificationCode,
+          this.props.restorePasswordSessionId
+        );
+      }
+    } else if (this.props.pathname === "/restore-password-allowed") {
+      if (this.changePasswordFormValidate()) {
+        this.props.restorePasswordVerification(
+          this.props.restorePasswordVerificationCode,
+          this.props.restorePasswordSessionId,
+          this.state.password
+        );
       }
     } else {
       if (this.loginFormValidate()) {
@@ -401,6 +445,43 @@ export class Login extends React.Component<LoginProps, StateLogin> {
         return {
           ...state,
           errorMessageRestorePass: "Введите корректные данные"
+        };
+      });
+      return (status = false);
+    }
+    return status;
+  }
+  private restorePassSessionFormValidate(): boolean {
+    let status = true;
+    let { verificationCode } = this.state as StateLogin;
+    if (!verificationCode) {
+      this.setState(state => {
+        return {
+          ...state,
+          errorMessageRestorePass: "Введите корректные данные"
+        };
+      });
+      return (status = false);
+    }
+    return status;
+  }
+  private changePasswordFormValidate(): boolean {
+    let status = true;
+    let { password, repeatPassword } = this.state as StateLogin;
+    if (!(password && repeatPassword)) {
+      this.setState(state => {
+        return {
+          ...state,
+          errorMessageRestorePass: "Введите корректные данные"
+        };
+      });
+      return (status = false);
+    }
+    if (password !== repeatPassword) {
+      this.setState(state => {
+        return {
+          ...state,
+          errorMessageRestorePass: "Пароли не совпадают"
         };
       });
       return (status = false);
@@ -471,10 +552,12 @@ const FormInputRepeatPassword = FormInputPassword.bind(
 const ButtonSubmitRegistration = ButtonSubmit.bind(null, "Регистрация");
 const ButtonSubmitLogin = ButtonSubmit.bind(null, "Войти");
 const ButtonSubmitRestorePassword = ButtonSubmit.bind(null, "Восстановить");
+const ButtonSubmitChangePassword = ButtonSubmit.bind(null, "Сменить пароль");
 
 const HeaderRegistration = HeaderSection.bind(null, "Зарегистрируйтесь");
 const HeaderLogin = HeaderSection.bind(null, "Войдите в аккаунт");
 const HeaderRestorePassword = HeaderSection.bind(null, "Восстановление пароля");
+const HeaderChangePassword = HeaderSection.bind(null, "Сменить пароль");
 
 const MessageRegistration = MessageBox.bind(
   null,

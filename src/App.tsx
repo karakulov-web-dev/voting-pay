@@ -19,6 +19,7 @@ class App extends Component {
           <Route path="/registration" component={Login} />
           <Route path="/restore-password" component={Login} />
           <Route path="/restore-password-session" component={Login} />
+          <Route path="/restore-password-allowed" component={Login} />
           <Route path="/voting" component={Voting} />
           <Route path="/about" component={Landing} />
           <Route path="/" component={Landing} />
