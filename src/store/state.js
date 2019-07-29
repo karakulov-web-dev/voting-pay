@@ -30,7 +30,8 @@ var state = {
     },
     loginForm: {
         errorMessageLogin: "",
-        errorMessageRegistration: ""
+        errorMessageRegistration: "",
+        errorMessageRestorePass: ""
     }
 };
 exports.state = state;

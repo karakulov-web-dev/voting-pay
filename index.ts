@@ -1,9 +1,19 @@
 import express from "express";
 import http from "http";
+import { prodaction } from "./variable";
 
 const app = express();
 
 app.use(express.json());
+
+app.get(/./, (req, res, next) => {
+  if (req.protocol === "http" && prodaction) {
+    res.redirect("https://" + req.headers.host + req.url);
+    return;
+  } else {
+    next();
+  }
+});
 
 app.use("/", express.static(__dirname + "/public"));
 
@@ -47,6 +57,29 @@ app.post("/login-user", (req, res) => {
     errorStatus,
     errorText,
     AccessToken
+  });
+});
+
+app.post("/restore-password", (req, res) => {
+  let errorStatus = false;
+  let errorText = "";
+  let restorePasswordSessionId = String(Math.random()).slice(2, 10);
+
+  res.send({
+    errorStatus,
+    errorText,
+    restorePasswordSessionId
+  });
+});
+
+app.post("/restore-password-verification-code", (req, res) => {
+  let errorStatus = false;
+  let errorText = "";
+
+  res.send({
+    errorStatus,
+    errorText,
+    AccessToken: "validToken"
   });
 });
 

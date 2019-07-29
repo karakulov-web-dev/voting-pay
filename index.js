@@ -5,8 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var http_1 = __importDefault(require("http"));
+var variable_1 = require("./variable");
 var app = express_1["default"]();
 app.use(express_1["default"].json());
+app.get(/./, function (req, res, next) {
+    if (req.protocol === "http" && variable_1.prodaction) {
+        res.redirect("https://" + req.headers.host + req.url);
+        return;
+    }
+    else {
+        next();
+    }
+});
 app.use("/", express_1["default"].static(__dirname + "/public"));
 app.post("/check-access-token", function (req, res) {
     var status;
@@ -47,6 +57,25 @@ app.post("/login-user", function (req, res) {
         errorStatus: errorStatus,
         errorText: errorText,
         AccessToken: AccessToken
+    });
+});
+app.post("/restore-password", function (req, res) {
+    var errorStatus = false;
+    var errorText = "";
+    var restorePasswordSessionId = String(Math.random()).slice(2, 10);
+    res.send({
+        errorStatus: errorStatus,
+        errorText: errorText,
+        restorePasswordSessionId: restorePasswordSessionId
+    });
+});
+app.post("/restore-password-verification-code", function (req, res) {
+    var errorStatus = false;
+    var errorText = "";
+    res.send({
+        errorStatus: errorStatus,
+        errorText: errorText,
+        AccessToken: "validToken"
     });
 });
 app.get(/./, function (req, res) {

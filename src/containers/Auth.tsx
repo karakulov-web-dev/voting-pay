@@ -5,6 +5,7 @@ import { State } from "../store/state";
 import { connect } from "react-redux";
 import { checkAccessToken, accessTokenChecker } from "../actions/Auth";
 import { Route } from "react-router";
+import { Redirect } from "react-router-dom";
 
 interface AuthProps {
   authStatus: boolean;
@@ -21,9 +22,21 @@ class Auth extends React.Component<any> {
     if (authStatus === true) {
       return this.props.children;
     } else if (authStatus === false) {
-      return <Route component={Login} />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/login"
+          }}
+        />
+      );
     } else {
-      return <Route component={Login} />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/login"
+          }}
+        />
+      );
     }
   }
   private checkAuth(): boolean | undefined {
