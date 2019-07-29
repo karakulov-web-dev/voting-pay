@@ -97,6 +97,10 @@ function restorePasswordVerification(req, code, sessionId, newPassword) {
                                 errorText: ""
                             }
                         });
+                        dispatch({
+                            type: "CHANGE_AUTH_STATUS",
+                            payload: true
+                        });
                         return [2 /*return*/];
                     }
                     action = {

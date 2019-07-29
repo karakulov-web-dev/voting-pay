@@ -78,6 +78,10 @@ export function restorePasswordVerification(
           errorText: ""
         }
       });
+      dispatch({
+        type: "CHANGE_AUTH_STATUS",
+        payload: true
+      });
       return;
     }
 
