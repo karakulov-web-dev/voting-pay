@@ -1,7 +1,8 @@
 import axios, { AxiosPromise } from "axios";
 import { resolve } from "url";
 
-const apiServer = "http://localhost/";
+let prodaction;
+const apiServer = prodaction ? "https://votingpay.com/" : "http://localhost/";
 
 const http = axios.create({
   baseURL: apiServer
@@ -15,7 +16,7 @@ export interface httpCheckAccessTokenResult {
 export type CheckAccessTokenPromise = AxiosPromise<httpCheckAccessTokenResult>;
 
 export function httpCheckAccessToken(token: string) {
-  return http.post<httpCheckAccessTokenResult>("/check-access-token", {
+  return http.post<httpCheckAccessTokenResult>("/auth/check-access-token", {
     AccessToken: token
   });
 }
@@ -26,7 +27,7 @@ export interface HttpRegistrationUserResult {
   errorText: string;
 }
 export function httpRegistrationUser(email: string, password: string) {
-  return http.post<HttpRegistrationUserResult>("/registration-user", {
+  return http.post<HttpRegistrationUserResult>("/auth/registration-user", {
     email,
     password
   });
@@ -39,8 +40,41 @@ export interface HttpLoginUserResult {
 }
 
 export function httploginUser(email: string, password: string) {
-  return http.post<HttpLoginUserResult>("/login-user", {
+  return http.post<HttpLoginUserResult>("/auth/login-user", {
     email,
     password
   });
+}
+
+export interface HttpRestorePasswordResult {
+  restorePasswordSessionId: string;
+  errorStatus: boolean;
+  errorText: string;
+}
+
+export function httpRestorePassword(email: string) {
+  return http.post<HttpRestorePasswordResult>("/auth/restore-password", {
+    email
+  });
+}
+
+export interface HttpVerificationCodeResult {
+  errorStatus: boolean;
+  errorText: string;
+  AccessToken?: string;
+}
+
+export function restorePasswordVerificationCode(
+  code: string,
+  sessionId: string,
+  newPassword?: string
+) {
+  return http.post<HttpVerificationCodeResult>(
+    "/auth/restore-password-verification-code",
+    {
+      code,
+      sessionId,
+      newPassword
+    }
+  );
 }
