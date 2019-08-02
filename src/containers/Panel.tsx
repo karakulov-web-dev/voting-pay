@@ -1,3 +1,6 @@
+import { connect } from "react-redux";
+import * as Redux from "redux";
+
 import Auth from "../containers/Auth";
 import React, { Component } from "react";
 import {
@@ -7,10 +10,8 @@ import {
   Image,
   Menu,
   Segment,
-  Sidebar,
-  Container
+  Sidebar
 } from "semantic-ui-react";
-import { relative } from "path";
 
 let style = {
   minHeight: "calc(100vh)"
@@ -26,23 +27,40 @@ const VerticalSidebar = ({ animation, direction, visible }: any) => (
     vertical
     visible={visible}
     width="thin"
+    style={{ paddingTop: "109px" }}
   >
     <Menu.Item as="a">
-      <Icon name="home" />
-      Home
+      <Icon name="wrench" />
+      Инструменты
     </Menu.Item>
     <Menu.Item as="a">
-      <Icon name="gamepad" />
-      Games
+      <Icon name="info" />
+      Информация
     </Menu.Item>
     <Menu.Item as="a">
-      <Icon name="camera" />
-      Channels
+      <Icon name="money" />
+      Баланс
+    </Menu.Item>
+    <Menu.Item as="a">
+      <Icon name="briefcase" />
+      Сделки
+    </Menu.Item>
+    <Menu.Item as="a">
+      <Icon name="envelope" />
+      Сообщения
+    </Menu.Item>
+    <Menu.Item as="a">
+      <Icon name="setting" />
+      Настройки
+    </Menu.Item>
+    <Menu.Item as="a">
+      <Icon name="log out" />
+      Выход
     </Menu.Item>
   </Sidebar>
 );
 
-class SidebarExampleTransitions extends Component {
+class SidebarPanel extends Component<any> {
   state = {
     animation: "overlay",
     direction: "left",
@@ -71,11 +89,10 @@ class SidebarExampleTransitions extends Component {
           />
           <Sidebar.Pusher dimmed={dimmed && visible} style={style}>
             <Segment basic style={{ padding: "0px" }}>
-              <Container
-                fluid
+              <div
                 style={{
                   background: "#1b1c1d",
-                  padding: "17px"
+                  padding: "20px"
                 }}
               >
                 <Button
@@ -85,7 +102,29 @@ class SidebarExampleTransitions extends Component {
                 >
                   <Icon name="sidebar" />
                 </Button>
-              </Container>
+                <span>
+                  <span
+                    className="logo-img"
+                    style={{
+                      backgroundSize: "contain",
+                      position: "relative",
+                      top: "5px",
+                      marginLeft: "20px"
+                    }}
+                  />
+                  <span className="logo-text logo-text-part1">Voting</span>
+                  <span className="logo-text logo-text-part2">Pay</span>
+                </span>
+                <Button
+                  onClick={() => {
+                    this.props.logOut();
+                  }}
+                  icon
+                  style={{ position: "fixed", right: "50px", top: "35px" }}
+                >
+                  <Icon name="log out" />
+                </Button>
+              </div>
               <Header as="h3">Application Content</Header>
               <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
             </Segment>
@@ -96,10 +135,31 @@ class SidebarExampleTransitions extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch: Redux.Dispatch<any>) => {
+  return {
+    logOut: () => {
+      localStorage.removeItem("AccessToken");
+      dispatch({
+        type: "CHANGE_AUTH_STATUS",
+        payload: false
+      });
+    }
+  };
+};
+
+interface DispatchProps {
+  logOut: () => void;
+}
+
+const PanelContainer = connect<DispatchProps>(
+  null,
+  mapDispatchToProps
+)(SidebarPanel);
+
 export function Panel() {
   return (
     <Auth>
-      <SidebarExampleTransitions />
+      <PanelContainer />
     </Auth>
   );
 }

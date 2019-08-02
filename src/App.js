@@ -32,7 +32,7 @@ var Facts_1 = __importDefault(require("./containers/Facts"));
 var Footer_1 = require("./components/Footer");
 var Contacts_1 = require("./components/Contacts");
 var Login_1 = __importDefault(require("./containers/Login"));
-var Panel_1 = require("./components/Panel");
+var Panel_1 = require("./containers/Panel");
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App() {

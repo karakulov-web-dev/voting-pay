@@ -7,7 +7,7 @@ import Facts from "./containers/Facts";
 import { Footer } from "./components/Footer";
 import { Contacts } from "./components/Contacts";
 import Login from "./containers/Login";
-import { Panel } from "./components/Panel";
+import { Panel } from "./containers/Panel";
 
 class App extends Component {
   render() {

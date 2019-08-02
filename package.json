@@ -1,6 +1,6 @@
 {
-  "name": "teststarterkit",
-  "version": "1.0.0",
+  "name": "voting-pay",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
