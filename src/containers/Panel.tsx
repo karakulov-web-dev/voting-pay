@@ -62,10 +62,10 @@ const VerticalSidebar = ({ animation, direction, visible }: any) => (
 
 class SidebarPanel extends Component<any> {
   state = {
-    animation: "overlay",
+    animation: "push",
     direction: "left",
     dimmed: false,
-    visible: false
+    visible: true
   };
 
   handleAnimationChange = (animation: string) => () =>
@@ -75,7 +75,7 @@ class SidebarPanel extends Component<any> {
     }));
 
   handleDirectionChange = (direction: string) => () =>
-    this.setState({ direction, visible: false });
+    this.setState({ direction, visible: true });
 
   render() {
     const { animation, dimmed, direction, visible } = this.state;

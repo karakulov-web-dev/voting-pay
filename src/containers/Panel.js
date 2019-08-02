@@ -60,10 +60,10 @@ var SidebarPanel = /** @class */ (function (_super) {
     function SidebarPanel() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
-            animation: "overlay",
+            animation: "push",
             direction: "left",
             dimmed: false,
-            visible: false
+            visible: true
         };
         _this.handleAnimationChange = function (animation) { return function () {
             return _this.setState(function (prevState) { return ({
@@ -72,7 +72,7 @@ var SidebarPanel = /** @class */ (function (_super) {
             }); });
         }; };
         _this.handleDirectionChange = function (direction) { return function () {
-            return _this.setState({ direction: direction, visible: false });
+            return _this.setState({ direction: direction, visible: true });
         }; };
         return _this;
     }
