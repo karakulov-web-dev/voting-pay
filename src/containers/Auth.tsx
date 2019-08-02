@@ -1,10 +1,8 @@
 import React from "react";
 import { ActionCreator, Dispatch, bindActionCreators } from "redux";
-import Login from "../containers/Login";
 import { State } from "../store/state";
 import { connect } from "react-redux";
 import { checkAccessToken, accessTokenChecker } from "../actions/Auth";
-import { Route } from "react-router";
 import { Redirect } from "react-router-dom";
 
 interface AuthProps {
@@ -13,22 +11,21 @@ interface AuthProps {
   children?: any;
 }
 
+interface ICheckAuthResult {
+  authStatus: boolean;
+  AccessTokenStatus: boolean;
+}
+
 class Auth extends React.Component<any> {
   constructor(props: any) {
     super(props);
   }
   render() {
     let authStatus = this.checkAuth();
-    if (authStatus === true) {
+    if (authStatus && this.props.authStatus) {
       return this.props.children;
-    } else if (authStatus === false) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/login"
-          }}
-        />
-      );
+    } else if (authStatus) {
+      return <div />;
     } else {
       return (
         <Redirect
@@ -39,18 +36,23 @@ class Auth extends React.Component<any> {
       );
     }
   }
-  private checkAuth(): boolean | undefined {
+  componentDidMount() {
+    this.props.dispatch({
+      type: "CHANGE_AUTH_STATUS",
+      payload: false
+    });
     const AccessToken = localStorage.getItem("AccessToken");
-    if (!AccessToken) {
-      return false;
-    }
-    if (this.props.authStatus) {
-      return true;
-    }
     setTimeout(() => {
       this.props.checkAccessToken(AccessToken, accessTokenChecker);
     });
-    return undefined;
+  }
+  private checkAuth(): boolean {
+    const AccessToken = localStorage.getItem("AccessToken");
+    if (AccessToken) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
@@ -63,7 +65,8 @@ function mapStateToProps(state: State) {
 function matchDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
-      checkAccessToken: checkAccessToken
+      checkAccessToken,
+      dispatch
     },
     dispatch
   );

@@ -28,13 +28,11 @@ var Auth = /** @class */ (function (_super) {
     }
     Auth.prototype.render = function () {
         var authStatus = this.checkAuth();
-        if (authStatus === true) {
+        if (authStatus && this.props.authStatus) {
             return this.props.children;
         }
-        else if (authStatus === false) {
-            return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
-                    pathname: "/login"
-                } }));
+        else if (authStatus) {
+            return react_1["default"].createElement("div", null);
         }
         else {
             return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
@@ -42,19 +40,25 @@ var Auth = /** @class */ (function (_super) {
                 } }));
         }
     };
-    Auth.prototype.checkAuth = function () {
+    Auth.prototype.componentDidMount = function () {
         var _this = this;
+        this.props.dispatch({
+            type: "CHANGE_AUTH_STATUS",
+            payload: false
+        });
         var AccessToken = localStorage.getItem("AccessToken");
-        if (!AccessToken) {
-            return false;
-        }
-        if (this.props.authStatus) {
-            return true;
-        }
         setTimeout(function () {
             _this.props.checkAccessToken(AccessToken, Auth_1.accessTokenChecker);
         });
-        return undefined;
+    };
+    Auth.prototype.checkAuth = function () {
+        var AccessToken = localStorage.getItem("AccessToken");
+        if (AccessToken) {
+            return true;
+        }
+        else {
+            return false;
+        }
     };
     return Auth;
 }(react_1["default"].Component));
@@ -65,7 +69,8 @@ function mapStateToProps(state) {
 }
 function matchDispatchToProps(dispatch) {
     return redux_1.bindActionCreators({
-        checkAccessToken: Auth_1.checkAccessToken
+        checkAccessToken: Auth_1.checkAccessToken,
+        dispatch: dispatch
     }, dispatch);
 }
 exports["default"] = react_redux_1.connect(mapStateToProps, matchDispatchToProps)(Auth);
