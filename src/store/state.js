@@ -13,7 +13,7 @@ try {
 catch (e) { }
 var state = {
     User: {
-        authStatus: false
+        authStatus: undefined
     },
     slider: {
         currSlide: 1,

@@ -27,14 +27,18 @@ var Auth = /** @class */ (function (_super) {
         return _super.call(this, props) || this;
     }
     Auth.prototype.render = function () {
+        console.log("render");
+        console.log(this.props.authStatus);
         var authStatus = this.checkAuth();
         if (authStatus && this.props.authStatus) {
+            console.log("1");
             return this.props.children;
         }
-        else if (authStatus) {
+        else if (authStatus && typeof this.props.authStatus === "undefined") {
             return react_1["default"].createElement("div", null);
         }
         else {
+            console.log("3");
             return (react_1["default"].createElement(react_router_dom_1.Redirect, { to: {
                     pathname: "/login"
                 } }));
@@ -42,10 +46,6 @@ var Auth = /** @class */ (function (_super) {
     };
     Auth.prototype.componentDidMount = function () {
         var _this = this;
-        this.props.dispatch({
-            type: "CHANGE_AUTH_STATUS",
-            payload: false
-        });
         var AccessToken = localStorage.getItem("AccessToken");
         setTimeout(function () {
             _this.props.checkAccessToken(AccessToken, Auth_1.accessTokenChecker);

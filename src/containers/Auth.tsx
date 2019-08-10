@@ -16,17 +16,22 @@ interface ICheckAuthResult {
   AccessTokenStatus: boolean;
 }
 
-class Auth extends React.Component<any> {
+class Auth extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
   }
   render() {
+    console.log("render");
+    console.log(this.props.authStatus);
+
     let authStatus = this.checkAuth();
     if (authStatus && this.props.authStatus) {
+      console.log("1");
       return this.props.children;
-    } else if (authStatus) {
+    } else if (authStatus && typeof this.props.authStatus === "undefined") {
       return <div />;
     } else {
+      console.log("3");
       return (
         <Redirect
           to={{
@@ -37,10 +42,6 @@ class Auth extends React.Component<any> {
     }
   }
   componentDidMount() {
-    this.props.dispatch({
-      type: "CHANGE_AUTH_STATUS",
-      payload: false
-    });
     const AccessToken = localStorage.getItem("AccessToken");
     setTimeout(() => {
       this.props.checkAccessToken(AccessToken, accessTokenChecker);

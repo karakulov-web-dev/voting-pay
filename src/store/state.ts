@@ -11,7 +11,7 @@ try {
 
 let state: State = {
   User: {
-    authStatus: false
+    authStatus: undefined
   },
   slider: {
     currSlide: 1,
@@ -34,7 +34,7 @@ let state: State = {
 };
 export interface State {
   User: {
-    authStatus: boolean;
+    authStatus: boolean | undefined;
     restorePasswordSessionId?: string;
     restorePasswordVerificationCode?: string;
   };
