@@ -54,7 +54,7 @@ const VerticalSidebar = ({ animation, direction, visible, logOut }: any) => (
           }}
         >
           <Icon name="info" />
-          Информация
+          Справка
         </Menu.Item>
       )}
     />

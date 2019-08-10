@@ -48,7 +48,7 @@ var VerticalSidebar = function (_a) {
                         history.push("/panel/info");
                     } },
                     react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "info" }),
-                    "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F"));
+                    "\u0421\u043F\u0440\u0430\u0432\u043A\u0430"));
             } }),
         react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
                 var history = _a.history;
