@@ -21,17 +21,12 @@ class Auth extends React.Component<any, any> {
     super(props);
   }
   render() {
-    console.log("render");
-    console.log(this.props.authStatus);
-
     let authStatus = this.checkAuth();
     if (authStatus && this.props.authStatus) {
-      console.log("1");
       return this.props.children;
     } else if (authStatus && typeof this.props.authStatus === "undefined") {
       return <div />;
     } else {
-      console.log("3");
       return (
         <Redirect
           to={{
