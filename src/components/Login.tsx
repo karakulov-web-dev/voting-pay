@@ -23,7 +23,7 @@ interface LoginProps {
   errorMessageLogin: string;
   errorMessageRegistration: string;
   errorMessageRestorePass: string;
-  authStatus: boolean;
+  authStatus: boolean | undefined;
   restorePasswordSessionId?: string;
   restorePasswordVerificationCode?: string;
 }
