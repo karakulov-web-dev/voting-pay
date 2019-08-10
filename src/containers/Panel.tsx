@@ -34,9 +34,12 @@ const VerticalSidebar = ({ animation, direction, visible, logOut }: any) => (
       render={({ history }) => (
         <Menu.Item
           as="a"
-          active={history.location.pathname === "/panel"}
+          active={
+            history.location.pathname === "/panel" ||
+            history.location.pathname === "/panel/tool"
+          }
           onClick={() => {
-            history.push("/panel");
+            history.push("/panel/tool");
           }}
         >
           <Icon name="wrench" />

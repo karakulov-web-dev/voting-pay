@@ -36,8 +36,9 @@ var VerticalSidebar = function (_a) {
     return (react_1["default"].createElement(semantic_ui_react_1.Sidebar, { as: semantic_ui_react_1.Menu, animation: animation, direction: direction, icon: "labeled", inverted: true, vertical: true, visible: visible, width: "thin", style: { paddingTop: "109px" } },
         react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
                 var history = _a.history;
-                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel", onClick: function () {
-                        history.push("/panel");
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel" ||
+                        history.location.pathname === "/panel/tool", onClick: function () {
+                        history.push("/panel/tool");
                     } },
                     react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "wrench" }),
                     "\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B"));
