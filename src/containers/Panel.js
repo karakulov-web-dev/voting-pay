@@ -24,6 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 exports.__esModule = true;
 var react_redux_1 = require("react-redux");
+var react_router_dom_1 = require("react-router-dom");
 var Auth_1 = __importDefault(require("../containers/Auth"));
 var react_1 = __importStar(require("react"));
 var semantic_ui_react_1 = require("semantic-ui-react");
@@ -31,27 +32,59 @@ var style = {
     minHeight: "calc(100vh)"
 };
 var VerticalSidebar = function (_a) {
-    var animation = _a.animation, direction = _a.direction, visible = _a.visible;
+    var animation = _a.animation, direction = _a.direction, visible = _a.visible, logOut = _a.logOut;
     return (react_1["default"].createElement(semantic_ui_react_1.Sidebar, { as: semantic_ui_react_1.Menu, animation: animation, direction: direction, icon: "labeled", inverted: true, vertical: true, visible: visible, width: "thin", style: { paddingTop: "109px" } },
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
-            react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "wrench" }),
-            "\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B"),
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
-            react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "info" }),
-            "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F"),
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
-            react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "money" }),
-            "\u0411\u0430\u043B\u0430\u043D\u0441"),
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
-            react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "briefcase" }),
-            "\u0421\u0434\u0435\u043B\u043A\u0438"),
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
-            react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "envelope" }),
-            "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F"),
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
-            react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "setting" }),
-            "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"),
-        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a" },
+        react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
+                var history = _a.history;
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel", onClick: function () {
+                        history.push("/panel");
+                    } },
+                    react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "wrench" }),
+                    "\u0418\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B"));
+            } }),
+        react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
+                var history = _a.history;
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel/info", onClick: function () {
+                        history.push("/panel/info");
+                    } },
+                    react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "info" }),
+                    "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F"));
+            } }),
+        react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
+                var history = _a.history;
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel/balance", onClick: function () {
+                        history.push("/panel/balance");
+                    } },
+                    react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "money" }),
+                    "\u0411\u0430\u043B\u0430\u043D\u0441"));
+            } }),
+        react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
+                var history = _a.history;
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel/deals", onClick: function () {
+                        history.push("/panel/deals");
+                    } },
+                    react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "briefcase" }),
+                    "\u0421\u0434\u0435\u043B\u043A\u0438"));
+            } }),
+        react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
+                var history = _a.history;
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel/message", onClick: function () {
+                        history.push("/panel/message");
+                    } },
+                    react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "envelope" }),
+                    "\u0421\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F"));
+            } }),
+        react_1["default"].createElement(react_router_dom_1.Route, { render: function (_a) {
+                var history = _a.history;
+                return (react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", active: history.location.pathname === "/panel/setting", onClick: function () {
+                        history.push("/panel/setting");
+                    } },
+                    react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "setting" }),
+                    "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"));
+            } }),
+        react_1["default"].createElement(semantic_ui_react_1.Menu.Item, { as: "a", onClick: function () {
+                logOut();
+            } },
             react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "log out" }),
             "\u0412\u044B\u0445\u043E\u0434")));
 };
@@ -81,7 +114,7 @@ var SidebarPanel = /** @class */ (function (_super) {
         var _a = this.state, animation = _a.animation, dimmed = _a.dimmed, direction = _a.direction, visible = _a.visible;
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement(semantic_ui_react_1.Sidebar.Pushable, { as: semantic_ui_react_1.Segment, style: { border: "none" } },
-                react_1["default"].createElement(VerticalSidebar, { animation: animation, direction: direction, visible: visible }),
+                react_1["default"].createElement(VerticalSidebar, { animation: animation, direction: direction, visible: visible, logOut: this.props.logOut }),
                 react_1["default"].createElement(semantic_ui_react_1.Sidebar.Pusher, { dimmed: dimmed && visible, style: style },
                     react_1["default"].createElement(semantic_ui_react_1.Segment, { basic: true, style: { padding: "0px" } },
                         react_1["default"].createElement("div", { style: {

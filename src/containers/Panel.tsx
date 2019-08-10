@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import * as Redux from "redux";
+import { Route } from "react-router-dom";
 
 import Auth from "../containers/Auth";
 import React, { Component } from "react";
@@ -17,7 +18,7 @@ let style = {
   minHeight: "calc(100vh)"
 };
 
-const VerticalSidebar = ({ animation, direction, visible }: any) => (
+const VerticalSidebar = ({ animation, direction, visible, logOut }: any) => (
   <Sidebar
     as={Menu}
     animation={animation}
@@ -29,31 +30,96 @@ const VerticalSidebar = ({ animation, direction, visible }: any) => (
     width="thin"
     style={{ paddingTop: "109px" }}
   >
-    <Menu.Item as="a">
-      <Icon name="wrench" />
-      Инструменты
-    </Menu.Item>
-    <Menu.Item as="a">
-      <Icon name="info" />
-      Информация
-    </Menu.Item>
-    <Menu.Item as="a">
-      <Icon name="money" />
-      Баланс
-    </Menu.Item>
-    <Menu.Item as="a">
-      <Icon name="briefcase" />
-      Сделки
-    </Menu.Item>
-    <Menu.Item as="a">
-      <Icon name="envelope" />
-      Сообщения
-    </Menu.Item>
-    <Menu.Item as="a">
-      <Icon name="setting" />
-      Настройки
-    </Menu.Item>
-    <Menu.Item as="a">
+    <Route
+      render={({ history }) => (
+        <Menu.Item
+          as="a"
+          active={history.location.pathname === "/panel"}
+          onClick={() => {
+            history.push("/panel");
+          }}
+        >
+          <Icon name="wrench" />
+          Инструменты
+        </Menu.Item>
+      )}
+    />
+    <Route
+      render={({ history }) => (
+        <Menu.Item
+          as="a"
+          active={history.location.pathname === "/panel/info"}
+          onClick={() => {
+            history.push("/panel/info");
+          }}
+        >
+          <Icon name="info" />
+          Информация
+        </Menu.Item>
+      )}
+    />
+    <Route
+      render={({ history }) => (
+        <Menu.Item
+          as="a"
+          active={history.location.pathname === "/panel/balance"}
+          onClick={() => {
+            history.push("/panel/balance");
+          }}
+        >
+          <Icon name="money" />
+          Баланс
+        </Menu.Item>
+      )}
+    />
+    <Route
+      render={({ history }) => (
+        <Menu.Item
+          as="a"
+          active={history.location.pathname === "/panel/deals"}
+          onClick={() => {
+            history.push("/panel/deals");
+          }}
+        >
+          <Icon name="briefcase" />
+          Сделки
+        </Menu.Item>
+      )}
+    />
+    <Route
+      render={({ history }) => (
+        <Menu.Item
+          as="a"
+          active={history.location.pathname === "/panel/message"}
+          onClick={() => {
+            history.push("/panel/message");
+          }}
+        >
+          <Icon name="envelope" />
+          Сообщения
+        </Menu.Item>
+      )}
+    />
+    <Route
+      render={({ history }) => (
+        <Menu.Item
+          as="a"
+          active={history.location.pathname === "/panel/setting"}
+          onClick={() => {
+            history.push("/panel/setting");
+          }}
+        >
+          <Icon name="setting" />
+          Настройки
+        </Menu.Item>
+      )}
+    />
+    <Menu.Item
+      as="a"
+      onClick={() => {
+        logOut();
+      }}
+    >
       <Icon name="log out" />
       Выход
     </Menu.Item>
@@ -86,6 +152,7 @@ class SidebarPanel extends Component<any> {
             animation={animation}
             direction={direction}
             visible={visible}
+            logOut={this.props.logOut}
           />
           <Sidebar.Pusher dimmed={dimmed && visible} style={style}>
             <Segment basic style={{ padding: "0px" }}>
