@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 exports.__esModule = true;
 var react_redux_1 = require("react-redux");
 var react_router_dom_1 = require("react-router-dom");
+var tool_1 = __importDefault(require("../components/tool"));
 var Auth_1 = __importDefault(require("../containers/Auth"));
 var react_1 = __importStar(require("react"));
 var semantic_ui_react_1 = require("semantic-ui-react");
@@ -137,8 +138,15 @@ var SidebarPanel = /** @class */ (function (_super) {
                                     _this.props.logOut();
                                 }, icon: true, style: { position: "fixed", right: "50px", top: "35px" } },
                                 react_1["default"].createElement(semantic_ui_react_1.Icon, { name: "log out" }))),
-                        react_1["default"].createElement(semantic_ui_react_1.Header, { as: "h3" }, "Application Content"),
-                        react_1["default"].createElement(semantic_ui_react_1.Image, { src: "https://react.semantic-ui.com/images/wireframe/paragraph.png" }))))));
+                        react_1["default"].createElement(semantic_ui_react_1.Segment, { style: {
+                                marginRight: "164px",
+                                marginLeft: "14px",
+                                marginTop: "14px",
+                                marginBottom: "14px"
+                            } },
+                            react_1["default"].createElement(react_router_dom_1.Switch, null,
+                                react_1["default"].createElement(react_router_dom_1.Route, { exact: true, path: "/panel", component: tool_1["default"] }),
+                                react_1["default"].createElement(react_router_dom_1.Route, { path: "/panel/tool", component: tool_1["default"] }))))))));
     };
     return SidebarPanel;
 }(react_1.Component));

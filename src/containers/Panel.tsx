@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import * as Redux from "redux";
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import tool from "../components/tool";
 
 import Auth from "../containers/Auth";
 import React, { Component } from "react";
@@ -195,8 +196,20 @@ class SidebarPanel extends Component<any> {
                   <Icon name="log out" />
                 </Button>
               </div>
-              <Header as="h3">Application Content</Header>
-              <Image src="https://react.semantic-ui.com/images/wireframe/paragraph.png" />
+
+              <Segment
+                style={{
+                  marginRight: "164px",
+                  marginLeft: "14px",
+                  marginTop: "14px",
+                  marginBottom: "14px"
+                }}
+              >
+                <Switch>
+                  <Route exact path="/panel" component={tool} />
+                  <Route path="/panel/tool" component={tool} />
+                </Switch>
+              </Segment>
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
