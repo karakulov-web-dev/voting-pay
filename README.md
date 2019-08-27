@@ -1,1 +1,1 @@
-readmi
+https://votingpay.com
